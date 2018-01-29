@@ -108,7 +108,10 @@ function ProviderMasterDetailView(params) {
 											},
 											OnCreateMasterDetail: function(detail, keyID) {
 												return new ContactsView({
-													nameID: keyID,
+													// nameID: keyID,
+													getMasterID: function() {
+														return detail.master.view.dataset.getKey()
+													},
 													container: detail.tab.container
 												});
 											},

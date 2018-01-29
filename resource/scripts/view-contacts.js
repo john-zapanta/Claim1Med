@@ -4,10 +4,10 @@
 // 
 // ****************************************************************************************************
 //==================================================================================================
-// uses view-contacts.js
+// uses edit-contacts.js
 //==================================================================================================
 function ContactsView(params){
-	var name_id = params.nameID ? params.nameID : params.requestParams.name_id;
+	//var name_id = params.nameID ? params.nameID : params.requestParams.name_id;
 	return new jGrid($.extend(params, {
 		paintParams: {
 			css: "contacts",
@@ -15,12 +15,13 @@ function ContactsView(params){
 		},
 		editForm: function(id, container, dialog) {
 			ContactsEdit({
-				url: ("?id={0}&name_id={1}").format(id, name_id),
+				//url: ("?id={0}&name_id={1}").format(id, name_id),
+				url: ("?id={0}&name_id={1}").format(id, params.getMasterID()),
 				container: container,
-				containerPadding: 0,
-				showToolbar: false,
-				pageControlTheme: "data-entry",
-				fillContainer: true,
+				//containerPadding: 0,
+				//showToolbar: false,
+				//pageControlTheme: "data-entry",
+				//fillContainer: true,
 				dialog: dialog
 			})
 		},
@@ -34,7 +35,8 @@ function ContactsView(params){
 							
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams
-						.addColumn("name_id", name_id, {numeric:true})
+						//.addColumn("name_id", name_id, {numeric:true})
+						.addColumn("name_id", params.getMasterID(), {numeric:true})
 						.addColumn("sort", "full_name")
 						.addColumn("order", "asc")
 				});
@@ -76,5 +78,5 @@ function ContactsView(params){
 				// });
 			});
 		}
-	}));
+	}));	
 };
