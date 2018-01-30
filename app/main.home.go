@@ -73,6 +73,43 @@ func init() {
 				})
 			})
 			
+			utils.NewNavigatorItem(p.Nav, "providers", "Providers", func(item *utils.NavigatorItem) {
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "providers-medical"
+					s.Action = "providers"
+					s.Title = "Medical"
+					s.Icon = "providers-medical"
+					s.Url = "app/providers-medical"
+					// s.Run = "ProviderMasterDetailView"
+				})
+				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "providers-travel"
+					s.Action = "providers"
+					s.Title = "Travel"
+					s.Icon = "providers-travel"
+					// s.Url = "engine/providers-travel"
+				})
+			})
+			
+			utils.NewNavigatorItem(p.Nav, "system", "System", func(item *utils.NavigatorItem) {
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "clients"
+					s.Action = "clients"
+					s.Title = "Clients & Policies"
+					s.Icon = "clients-policies"
+					// s.Url = "engine/providers-medical"
+				})
+				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "products"
+					s.Action = "products,plans,benefits"
+					s.Title = "Products, Plans & Benefits"
+					s.Icon = "products"
+					// s.Url = "engine/providers-travel"
+				})
+			})
+			
 			if system.AllowAction("security") {
 				utils.NewNavigatorItem(p.Nav, "security", "Security", func(item *utils.NavigatorItem) {
 				

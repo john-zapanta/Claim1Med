@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"net/http"
 	"github.com/gorilla/mux"
 	"ibsi/utils"
@@ -23,7 +24,9 @@ func init() {
 		Template: "template-2",
 		OnInitHandlers: func(ts *template.Controller) {
 			// ts.Add("/app/claim/{id\\/?}")
-			ts.Add("/app/claim/{keyid:new}/{memberid:[0-9]+\\/?}")
+			// ts.Add("/app/claim/{keyid:new}/{memberid:[0-9]+\\/?}")
+			// ts.Add("/app/claim/new/{memberid:[0-9]+}")
+			ts.Add("/app/claim/new/{type}/{memberid:[0-9]+}")
 			ts.Add("/app/claim/{keyid:[0-9]+\\/?}")
 			// ts.Add("/app/claim/{new}/{keyid:[0-9]+\\/?}")
 		},
@@ -36,27 +39,42 @@ func init() {
 			if vars["keyid"] != "new" {
 				id = utils.StrToInt64(vars["keyid"])
 			}
-			
+						
 			dbClaim := dbase.Connections["DBApp"].OpenDataTable("GetClaim", dbase.TParameters{"id": id, "visit_id": vid})
-			
-			// newRecord := 1
 			
 			if id == 0 {
 				memberId = utils.StrToInt64(vars["memberid"])
-				
 				p.Title = "New Claim"
 				p.Nav.PageTitle = "New Claim"
 				p.Nav.WindowTitle = "New Claim"
 			} else {
 				memberId = dbClaim.Get("member_id").(int64)
-				
 				p.Title = "Claim: " + dbClaim.Get("claim_no").(string)
 				p.Nav.PageTitle = "Claim: " + dbClaim.Get("claim_no").(string)
 				p.Nav.WindowTitle = dbClaim.Get("claim_no").(string)
 			}
-
-			dbMmember := dbase.Connections["DBApp"].OpenDataTable("GetClaimMemberInfo", dbase.TParameters{"claim_id":id, "member_id":memberId, "visit_id":vid})
 			
+			dbMmember := dbase.Connections["DBApp"].OpenDataTable("GetClaimMemberInfo", dbase.TParameters{"claim_id":id, "member_id":memberId, "visit_id":vid})
+
+			if id == 0 {
+				dbClaim.Add(dbase.TDataTableRow{
+					"id": 0,
+					"claim_no": "",
+					"claim_type": strings.ToUpper(vars["type"]),
+					"status_code": "N",
+					"status": "NEW CLAIM",
+					"case_owner": "super",
+					"member_id": memberId,
+					"name_id": dbMmember.Get("name_id").(int64),
+					"main_name_id": dbMmember.Get("main_name_id").(int64),
+					"policy_id": dbMmember.Get("policy_id").(int64),
+					"client_id": dbMmember.Get("client_id").(int64),
+					"product_code": dbMmember.Get("product_code").(string),
+					"plan_code": dbMmember.Get("plan_code").(string),
+				})
+			}
+			
+
 			p.Nav.CustomData = map[string]interface{}{
 				"newRecord": utils.Ifx(id == 0, 1, 0),
 				"claim_type": utils.Ifx(id == 0, "", dbClaim.Get("claim_type")),
@@ -81,6 +99,16 @@ func init() {
 					// If ClaimType = "MED"
 						// .Description = "Medical Claim"
 					// End if
+				})
+			
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "call-log"
+					s.Title = "Call Logs"
+					s.Icon = "phone"
+					s.Action = "admin"				
+					// s.Url = "app/call-logs"
+					s.Params["claim_id"] = id
+					s.Params["member_id"] = memberId
 				})
 			
 				utils.NewMenuItem(item, func(s *utils.MenuItem) {

@@ -48,8 +48,8 @@ function ClaimDiagnosisSummaryView(params) {
 				
 				grid.Events.OnInitCard.add(function(grid, card) {
 					grid.dataset.gotoKey(parseInt(card.attr("row-id")));
-					
 					card.attr("x-parent", grid.dataset.get("main"));
+					
 					if(grid.dataset.get("main")) {
 						card.addClass("parent")
 					} else {

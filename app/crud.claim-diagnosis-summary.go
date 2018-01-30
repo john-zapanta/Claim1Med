@@ -19,8 +19,8 @@ func init() {
 			// "delete": false,
 		// },
 		OnInitCrud: func(crud map[string]bool) {
-			crud["add"] = true
-			crud["edit"] = true
+			crud["add"] = false
+			crud["edit"] = false
 			crud["delete"] = false
 		},
 	})

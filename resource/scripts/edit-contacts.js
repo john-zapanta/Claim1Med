@@ -9,13 +9,12 @@ function ContactsEdit(params){
 		id: params.id,
 		dialog: params.dialog,
 		container: params.container,
-		containerPadding: defaultValue(params.containerPadding, 10),
-		containerPadding: defaultValue(params.containerPadding, 10),
-		pageControlTheme: defaultValue(params.pageControlTheme, "main"),
-		fillContainer: defaultValue(params.fillContainer, false),
-		showToolbar: params.showToolbar,
+		containerPadding: defaultValue(params.containerPadding, 0),
+		pageControlTheme: defaultValue(params.pageControlTheme, "data-entry"),
+		fillContainer: defaultValue(params.fillContainer, true),
+		showToolbar: defaultValue(params.showToolbar, false),
 		url: params.url,
-		postBack: "contacts",
+		postBack: "app/contacts",
 		init: function(editor) {
 			editor.Events.OnInitData.add(function(sender, data) {
 				data.Columns

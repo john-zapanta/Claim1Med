@@ -15,7 +15,7 @@ func init() {
 		ListDataSource: "DBApp.GetCaseHistory",
 		OnInitCrud: func(crud map[string]bool) {
 			crud["add"] = false
-			crud["edit"] = false
+			crud["edit"] = true
 			crud["delete"] = false
 		},
 	})

@@ -17,15 +17,13 @@ function MemberPlanHistoryView(viewParams){
 			grid.Events.OnInit.add(function(grid) {
 				grid.optionsData.url = "app/member-plan-history";
 				
-				// grid.options.viewType = "cardview";
-				// grid.options.hideHeader = true;
-				
 				grid.options.horzScroll = true;
 				grid.options.allowSort = false;
 				grid.options.editNewPage = false;
 				grid.options.showBand = false;
 				grid.options.showSummary = false;
 				grid.options.showPager = false;
+				grid.options.showMasterDetail = true;
 				
 				grid.search.visible = false;
 				grid.exportData.allow = false;
@@ -71,31 +69,97 @@ function MemberPlanHistoryView(viewParams){
 					row.attr("x-vip", grid.dataset.get("vip_flag"));
 					row.attr("x-blacklisted", grid.dataset.get("blacklisted_flag"));
 				});	
+		
+				grid.methods.add("getCommandHeaderIcon", function(grid, column, defaultValue) {
+					if(column.command === "master-detail")
+						return "notes"
+					else if(column.command === "override1")
+						return "override"
+					else if(column.command === "override2")
+						return "override"
+					else
+						return defaultValue
+				});
+		
+				grid.methods.add("getCommandIcon", function(grid, column, defaultValue) {
+					if(column.command === "override1")
+						return "override"
+					else if(column.command === "override2")
+						return "override"
+					else
+						return defaultValue
+				});
+		
+				grid.methods.add("getCommandHint", function(grid, column, defaultValue) {
+					if(column.command === "master-detail")
+						return "View history notes"
+					else if(column.command === "override1")
+						return "Override Plan"
+					else if(column.command === "override2")
+						return "Override Plan from same Product"
+					else
+						return defaultValue
+				});
+
+				// grid.methods.add("allowCommand", function(grid, column, defaultValue) {
+					// if(column.command === "override1")
+						// return grid.dataset.get("plan_code").trim() !== desktop.dbMember.get("plan_code").trim()
+						// return grid.dataset.get("plan_code").trim() !== desktop.dbClaim.get("plan_code").trim()
+					// else
+						// return defaultValue
+				// });
+
+				grid.Events.OnCommand.add(function(grid, column) {
+					if(column.command === "override1") {
+						// __report(grid.dataset.get("id"));
+						// column.element is the cell container
+						console.log(column)
+					};
+				});
+				
+				grid.Events.OnMasterDetail.add(function(grid, params) {
+					params.setHeight(250);
+					CreateElementEx("pre", params.container, function(notes) {
+						notes.append(grid.dataset.text("notes"));
+						// notes.append(desktop.dbMember.text("notes"));
+						// notes.append("TEST:\tA\rTEST:\tA\r");
+					});
+					// ListNoteSubTypes({
+						// noteSubType: grid.dataset.get("code"),
+						// container: params.container
+					// })
+				})
 				
 				grid.Events.OnInitColumns.add(function(grid) {
-					grid.NewColumn({fname: "sequence_no", width: 30});
-					grid.NewColumn({fname: "flag", width: 50});
-					grid.NewColumn({fname: "history_type", width: 50});
-					grid.NewColumn({fname: "plan_code", width: 100});
-					grid.NewColumn({fname: "sub_product", width: 100});
-					grid.NewColumn({fname: "start_date", width: 100});
-					grid.NewColumn({fname: "end_date", width: 100});
-					grid.NewColumn({fname: "cancelation_date", width: 100});
-					grid.NewColumn({fname: "reinstatement_date", width: 100});
-					grid.NewColumn({fname: "extension_date", width: 100});
-					grid.NewColumn({fname: "renewal_date", width: 100});
-					grid.NewColumn({fname: "rcd", width: 100});
-					grid.NewColumn({fname: "wait_period_start_date", width: 100});
-					grid.NewColumn({fname: "wait_period_days", width: 100});
-					grid.NewColumn({fname: "wait_period_months", width: 100});
-					grid.NewColumn({fname: "prorate_amount", width: 100});
-					grid.NewColumn({fname: "create_date", width: 150});
-					grid.NewColumn({fname: "create_user_name", width: 100});
-					grid.NewColumn({fname: "update_date", width: 150});
-					grid.NewColumn({fname: "update_user_name", width: 100});
+					grid.NewBand({caption: "...", fixed:"left"} , function(band) {
+						band.NewCommand({command:"override1"});
+						band.NewCommand({command:"override2"});
+						// band.NewCommand({command:"override2"});
+						// band.NewColumn({fname: "sequence_no", width: 30});
+					});
 					
-					// grid.NewColumn({fname: "create_user", width: 150});
-					// grid.NewColumn({fname: "create_date", width: 150});
+					grid.NewBand({caption: "..."} , function(band) {
+						band.NewColumn({fname: "sequence_no", width: 30});
+						band.NewColumn({fname: "flag", width: 50});
+						band.NewColumn({fname: "history_type", width: 50});
+						band.NewColumn({fname: "plan_code", width: 100});
+						band.NewColumn({fname: "sub_product", width: 100});
+						band.NewColumn({fname: "start_date", width: 100});
+						band.NewColumn({fname: "end_date", width: 100});
+						band.NewColumn({fname: "cancelation_date", width: 100});
+						band.NewColumn({fname: "reinstatement_date", width: 100});
+						band.NewColumn({fname: "extension_date", width: 100});
+						band.NewColumn({fname: "renewal_date", width: 100});
+						band.NewColumn({fname: "rcd", width: 100});
+						band.NewColumn({fname: "wait_period_start_date", width: 100});
+						band.NewColumn({fname: "wait_period_days", width: 100});
+						band.NewColumn({fname: "wait_period_months", width: 100});
+						band.NewColumn({fname: "prorate_amount", width: 100});
+						band.NewColumn({fname: "create_date", width: 150});
+						band.NewColumn({fname: "create_user_name", width: 100});
+						band.NewColumn({fname: "update_date", width: 150});
+						band.NewColumn({fname: "update_user_name", width: 100});
+					});
 				});
 				
 				grid.Events.OnInitToolbar.add(function(grid, toolbar) {
