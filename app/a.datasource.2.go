@@ -116,37 +116,6 @@ func init() {
 		cmd.NewParameter("visit_id", "int", "in", 0, 0)
 	})
 
-	dbase.Connections["DBApp"].NewCommand("GetBanks", "GetBanks", "procedure", func(cmd dbase.ICommand) {
-		cmd.NewParameter("id", "int", "in", 0, 0)
-		cmd.NewParameter("name_id", "int", "in", 0, 0)
-		cmd.NewParameter("sort", "string", "in", 200, "")
-		cmd.NewParameter("order", "string", "in", 10, "")
-		cmd.NewParameter("visit_id", "int", "in", 0, 0)
-	})
-
-	dbase.Connections["DBApp"].NewCommand("AddBanks", "AddBanks", "procedure", func(cmd dbase.ICommand) {
-		cmd.NewParameter("id", "int", "inout", 0, 0)
-		cmd.NewParameter("name_id", "int", "in", 0, 0)
-		cmd.NewParameter("bank_name", "string", "in", 34, "")
-		cmd.NewParameter("sort_code", "string", "in", 11, "")
-		cmd.NewParameter("swift_code", "string", "in", 11, "")
-		cmd.NewParameter("bank_address1", "string", "in", 34, "")
-		cmd.NewParameter("bank_address2", "string", "in", 34, "")
-		cmd.NewParameter("bank_address3", "string", "in", 34, "")
-		cmd.NewParameter("bank_country_code", "string", "in", 2, "")
-		cmd.NewParameter("beneficiary_name", "string", "in", 34, "")
-		cmd.NewParameter("beneficiary_bank_account", "string", "in", 34, "")
-		cmd.NewParameter("beneficiary_address1", "string", "in", 34, "")
-		cmd.NewParameter("beneficiary_address2", "string", "in", 34, "")
-		cmd.NewParameter("beneficiary_address3", "string", "in", 34, "")
-		cmd.NewParameter("beneficiary_country_code", "string", "in", 2, "")
-
-		cmd.NewParameter("action", "int", "in", 0, 10)
-		cmd.NewParameter("visit_id", "int", "in", 0, 0)
-		cmd.NewParameter("action_status_id", "int", "inout", 0, 0)
-		cmd.NewParameter("action_msg", "string", "inout", 200, "")
-	})
-
 	dbase.Connections["DBApp"].NewCommand("GetCurrencies", "GetCurrencies", "procedure", func(cmd dbase.ICommand) {
 		cmd.NewParameter("code", "string", "in", 3, "")
 		cmd.NewParameter("filter", "string", "in", 100, "")
