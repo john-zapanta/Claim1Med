@@ -100,8 +100,9 @@ function TaskManagerView(params){
 					var main;
 					main = menus.add("Claim");
 						main.add(grid.dataset.get("claim_no"), __claim(grid.dataset.get("claim_id"), true), "db-open");
-						if(grid.dataset.get("service_no"))
+						if(grid.dataset.get("service_no")) {
 							main.add(grid.dataset.get("service_no"), __service(grid.dataset.get("service_id"), grid.dataset.get("service_type"), true), "db-open");
+						}
 						main.add(grid.dataset.get("patient_name"), __member(grid.dataset.get("member_id"), true), "db-open");
 						
 					main = menus.add("Policy");

@@ -6,6 +6,23 @@
 // File name: view-claim-diagnosis-summary.js
 //==================================================================================================
 function ClaimStatusHistoryView(params) {
+	var ChangeStatus = function(status, new_status) {
+		var params = {
+			mode: "new",
+			data: JSON.stringify([{
+				claim_id: desktop.dbClaim.getKey(),
+				status_code: status
+				// new_status_code: new_status
+			}])
+		};
+
+		desktop.Ajax(self, "/app/get/update/claim-status-history", params, function(result) {
+			if (result.status == 0) {
+				location.reload();
+			}
+		})
+	};
+	
 	return new jGrid($.extend(params, {
 		paintParams: {
 			css: "claim-status",
@@ -85,6 +102,60 @@ function ClaimStatusHistoryView(params) {
 				
 				grid.Events.OnInitColumns.add(function(grid) {
 					// grid.NewColumn({fname: "diagnosis_code", width: 150, fixedWidth:true, allowSort: true});
+				});
+				
+				grid.Events.OnInitToolbar.add(function(view, toolbar) {
+					if (desktop.dbClaim.get("status_code") === "O") {
+						toolbar.NewDropDownConfirmItem({
+							id: "close",
+							icon: "claim-close",
+							color: "black",
+							hint: "Close Claim",
+							title: "Close Claim",
+							subTitle: "Please confirm to close claim.",
+							// dataBind: desktop.dbClaim,
+							// dataEvent: function(dataset, button) {
+								// button.show(!dataset.editing);
+							// },
+							confirm: function() {
+								ChangeStatus("C");
+							}
+						});
+					
+						toolbar.NewDropDownConfirmItem({
+							id: "decline",
+							icon: "claim-decline",
+							color: "firebrick",
+							hint: "Decline Claim",
+							title: "Decline Claim",
+							subTitle: "Please confirm to decline claim.",
+							// dataBind: desktop.dbClaim,
+							// dataEvent: function(dataset, button) {
+								// button.show(!dataset.editing);
+							// },
+							confirm: function() {
+								ChangeStatus("D");
+							}
+						});
+					}
+					
+					if (desktop.dbClaim.get("status_code") != "O") {
+						toolbar.NewDropDownConfirmItem({
+							id: "open",
+							icon: "claim-open",
+							color: "#1AB394",
+							hint: "Re-Open Claim",
+							title: "Re-Open Claim",
+							subTitle: "Please confirm to re-open claim.",
+							// dataBind: desktop.dbClaim,
+							// dataEvent: function(dataset, button) {
+								// button.show(!dataset.editing);
+							// },
+							confirm: function() {
+								ChangeStatus("O");
+							}
+						});
+					}
 				});
 			});
 		}
