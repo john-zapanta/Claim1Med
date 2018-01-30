@@ -2,20 +2,18 @@ package main
 
 import (
 	"net/http"
-	// "github.com/gorilla/mux"
-	"ibsi/crud"
 	"ibsi/dbase"
+	"ibsi/crud"
 	"ibsi/utils"
 )
 
 func init() {
-
-	crud.Handler(crud.CrudHandler{
-		Name:             "contacts",
-		Action:           "contacts",
-		Path:             "",
-		KeyName:          "id",
-		ListDataSource:   "DBApp.GetContacts",
+	crud.Handler(crud.CrudHandler {
+		Name: "contacts",
+		Action: "contacts",
+		Path: "",
+		KeyName: "id",
+		ListDataSource: "DBApp.GetContacts",
 		UpdateDataSource: "DBApp.AddContacts",
 		OnInitCrud: func(crud map[string]bool) {
 			// crud["delete"] = false
@@ -33,6 +31,7 @@ func init() {
 	dbase.Connections["DBApp"].NewCommand("GetContacts", "GetContacts", "procedure", func(cmd dbase.ICommand) {
 		cmd.NewParameter("id", "int", "in", 0, 0)
 		cmd.NewParameter("name_id", "int", "in", 0, 0)
+		cmd.NewParameter("action", "int", "in", 0, 0)
 		cmd.NewParameter("sort", "string", "in", 200, "")
 		cmd.NewParameter("order", "string", "in", 10, "")
 		cmd.NewParameter("visit_id", "int", "in", 0, 0)

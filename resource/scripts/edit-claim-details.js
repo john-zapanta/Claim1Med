@@ -1,8 +1,9 @@
-// ****************************************************************************************************
-// File name: edit-claim-details.js
-// Last modified on
-// 
-// ****************************************************************************************************
+/****************************************************************************************************
+	File name: edit-claim-details.js
+	Last modified on
+	
+	Called from claim-details.js
+****************************************************************************************************/
 function ClaimDetailsEdit(viewParams) {
 	return new JFormEditor({
 		id: viewParams.id,
@@ -14,14 +15,14 @@ function ClaimDetailsEdit(viewParams) {
 		fillContainer: false,
 		showToolbar: false,
 		url: "?id=" + desktop.dbClaim.get("id"),
-		postBack: "app/claim",
+		postBack: "app/claim-details",
 		init: function(editor) {
 			editor.Events.OnInitData.add(function(group, columnName) {
 				// console.log(columnName)
 			});
-			
+
 			editor.Events.OnInitEditor.add(function(sender, editor) {
-				editor.NewGroupEdit({caption:"General", icon:{name:"view-list", color:"forestgreen"}}, 
+				editor.NewGroupEdit({caption:"General", icon:{name:"view-list", color:"forestgreen"}},
 					function(editor, tab) {
 						editor.group.OnDatasetChanged.add(function(group, columnName) {
 							if(columnName == "is_accident" || columnName === undefined) {
@@ -33,7 +34,7 @@ function ClaimDetailsEdit(viewParams) {
 
 								editor.SetRequired("first_symptom_date", !isAccident);
 								editor.SetRequired("first_consultation_date", !isAccident);
-								
+
 								editor.SetVisible("accident_date", isAccident);
 								editor.SetVisible("accident_code", isAccident);
 
@@ -41,7 +42,7 @@ function ClaimDetailsEdit(viewParams) {
 								editor.SetRequired("accident_code", isAccident);
 							};
 						});
-						
+
 						editor.AddGroup("Basic Claim Information", function(editor) {
 							editor.AddEdit({ID: "id"});
 							editor.AddEdit({ID: "claim_no"});
@@ -52,22 +53,22 @@ function ClaimDetailsEdit(viewParams) {
 						editor.AddGroup("Reference Numbers", function(editor) {
 							editor.AddEdit({ID: "hcm_reference"});
 							if(desktop.dbMember.get("claim_reference1")) {
-								editor.AddEdit({ID: "reference_no1"}) 
+								editor.AddEdit({ID: "reference_no1"})
 							}
-							
+
 							if(desktop.dbMember.get("claim_reference2")) {
 								editor.AddEdit({ID: "reference_no2"})
 							}
-							
+
 							if(desktop.dbMember.get("claim_reference3")) {
 								editor.AddEdit({ID: "reference_no3"})
 							}
 						});
-						
+
 						editor.AddGroup("Location", function(editor) {
 							editor.AddLookup("country_of_incident", {width:400, height:300, disableEdit:true, init:CountriesLookup});
 						});
-						
+
 						// editor.AddGroup("Accident", function(editor) {
 							// editor.AddRadioButton("is_accident", {
 								// key: "id",
@@ -78,7 +79,7 @@ function ClaimDetailsEdit(viewParams) {
 								// ]
 							// });
 						// });
-						
+
 						editor.AddGroup("Medical Condition", function(editor) {
 							editor.AddRadioButton("is_accident", {
 								key: "id",
@@ -106,7 +107,7 @@ function ClaimDetailsEdit(viewParams) {
 							editor.AddEdit("first_symptom_date");
 							editor.AddEdit("first_consultation_date");
 						});
-						
+
 						if(desktop.customData.claim_id) {
 							editor.AddGroup("Update Log", function(editor) {
 								// editor.AddEdit({ID: "create_date"}, {noLabel:true});

@@ -45,10 +45,12 @@ begin
 		@diagnosis = COALESCE(@diagnosis + ', {' , '{') + ('"code":"'+rtrim(diagnosis_code)+'"' +', "diagnosis":"'+ rtrim(diagnosis) +'"}')
 	FROM @groups
    	
-	SET @diagnosis = '['+ @diagnosis +']'
+	--SET @diagnosis = '['+ REPLACE(REPLACE(@diagnosis, ']', '\]'), '[', '\[') +']'
+	SET @diagnosis = '['+ ISNULL(@diagnosis, '') +']'
 
 	RETURN @diagnosis
 end
+
 
 GO
 

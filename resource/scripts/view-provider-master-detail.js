@@ -5,12 +5,13 @@
 //==================================================================================================
 // File name: provider-master-detail-view.js
 //==================================================================================================
-function ProviderMasterDetailView(params) {
-	var providerType = params.requestParams.provider_type;
+function ProvidersMedicalTabs(params) {
+	// var providerType = params.requestParams.provider_type;
+	var providerType = "D";
 	var providerMasterView;
 
-	desktop.dbCountries = desktop.LoadCacheData(desktop.customData.countries, "countries", "code");
-	desktop.dbDoctorSpecialisation = desktop.LoadCacheData(desktop.customData.specialisation, "specialisation", "specialisation_code");
+	// desktop.dbCountries = desktop.LoadCacheData(desktop.customData.countries, "countries", "code");
+	// desktop.dbDoctorSpecialisation = desktop.LoadCacheData(desktop.customData.specialisation, "specialisation", "specialisation_code");
 
 	new jPageControl({
 		paintParams: {
