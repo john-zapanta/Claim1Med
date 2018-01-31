@@ -5,12 +5,13 @@
 //==================================================================================================
 // File name: provider-master-detail-view.js
 //==================================================================================================
-function ProviderMasterDetailView(params) {
-	var providerType = params.requestParams.provider_type;
+function ProvidersMedicalTabs(params) {
+	// var providerType = params.requestParams.provider_type;
+	var providerType = "D";
 	var providerMasterView;
 
-	desktop.dbCountries = desktop.LoadCacheData(desktop.customData.countries, "countries", "code");
-	desktop.dbDoctorSpecialisation = desktop.LoadCacheData(desktop.customData.specialisation, "specialisation", "specialisation_code");
+	// desktop.dbCountries = desktop.LoadCacheData(desktop.customData.countries, "countries", "code");
+	// desktop.dbDoctorSpecialisation = desktop.LoadCacheData(desktop.customData.specialisation, "specialisation", "specialisation_code");
 
 	new jPageControl({
 		paintParams: {
@@ -124,9 +125,26 @@ function ProviderMasterDetailView(params) {
 										});
 										pg.addTab({caption:"Banks",
 											icon: {
-												name: "table"
+												name: "bank"
+											},
+											OnSetKey: function(detail, keyID) {
+												detail.view.dataParams.set("name_id", keyID);
+												detail.view.refresh();
+											},
+											OnCreateMasterDetail: function(detail, keyID) {
+												return new BanksView({
+													// nameID: keyID,
+													getMasterID: function() {
+														return detail.master.view.dataset.getKey()
+													},
+													container: detail.tab.container
+												});
 											},
 											OnCreate: function(tab) {
+												tab.detail.update();
+											},
+											OnActivate: function(tab) {
+												tab.detail.sync();
 											}
 										});
 										pg.addTab({caption:"Notes",

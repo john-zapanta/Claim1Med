@@ -10,6 +10,7 @@ MainPage.prototype.AfterPaint = function() {
 	// desktop.dbCurrencies = desktop.LoadCacheData(desktop.customData.currencies, "currencies", "code");
 
 	desktop.dbMedicalNotes = new Dataset(desktop.customData.medical_notes);
+	desktop.dbMedicalNotes.Columns.setprops("id", {numeric:true, key: true});
 
 	desktop.dbMember = new Dataset(desktop.customData.member);
 	desktop.dbMember.readonly = true;
@@ -72,7 +73,7 @@ MainPage.prototype.AfterPaint = function() {
 
 		.setprops("status", {label:"Status"})
 		.setprops("expired", {label:"Expired"})
-		.setprops("plan_name", {label:"Type", required:true})
+		.setprops("plan_name", {label:"Type", required:false})
 
 		.setprops("country_of_incident", {label:"Country of Incident", required:true, lookupDataset: desktop.dbCountries,
 			getText: function(column, value) {

@@ -9,13 +9,13 @@ import (
 func init() {
 
 	crud.Handler(crud.CrudHandler {
-		Name: "members-search",
-		Action: "members-search",
+		Name: "task-manager",
+		Action: "tasks",
 		KeyName: "id",
-		ListDataSource: "DBApp.GetMembersEnquiry",
+		ListDataSource: "DBApp.GetTaskManager",
 		OnInitCrud: func(crud map[string]bool) {
 			crud["add"] = false
-			crud["add"] = true
+			crud["edit"] = false
 			crud["delete"] = false
 		},
 		// OnNewRecord: func(mode string, row map[string]interface{}, w http.ResponseWriter, r *http.Request) {
@@ -24,15 +24,14 @@ func init() {
 		// },
 	})
 
-	dbase.Connections["DBApp"].NewCommand("GetMembersEnquiry", "GetMembersEnquiry", "procedure", func(cmd dbase.ICommand) {
-		cmd.NewParameter("id", "int", "in", 0, 1)
-		cmd.NewParameter("visit_id", "int", "in", 0, 0)
+	dbase.Connections["DBApp"].NewCommand("GetTaskManager", "GetTaskManager", "procedure", func(cmd dbase.ICommand) {
+		cmd.NewParameter("filter", "string", "in", 100, "")
 		cmd.NewParameter("page", "int", "in", 0, 1)
 		cmd.NewParameter("pagesize", "int", "in", 0, 0)
 		cmd.NewParameter("row_count", "int", "inout", 0, 0)
 		cmd.NewParameter("page_count", "int", "inout", 0, 0)
 		cmd.NewParameter("sort", "string", "in", 200, "")
 		cmd.NewParameter("order", "string", "in", 10, "")
+		cmd.NewParameter("visit_id", "int", "in", 0, 0)
 	})
-	
 }
