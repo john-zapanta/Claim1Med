@@ -4,18 +4,16 @@
 // 
 // ****************************************************************************************************
 function BanksEdit(params){
-	// console.log(params)
 	return new FormEditor({
 		id: params.id,
 		dialog: params.dialog,
 		container: params.container,
-		containerPadding: defaultValue(params.containerPadding, 10),
-		containerPadding: defaultValue(params.containerPadding, 10),
-		pageControlTheme: defaultValue(params.pageControlTheme, "main"),
-		fillContainer: defaultValue(params.fillContainer, false),
-		showToolbar: params.showToolbar,
+		containerPadding: defaultValue(params.containerPadding, 0),
+		pageControlTheme: defaultValue(params.pageControlTheme, "data-entry"),
+		fillContainer: defaultValue(params.fillContainer, true),
+		showToolbar: defaultValue(params.showToolbar, false),
 		url: params.url,
-		postBack: "banks",
+		postBack: "app/banks",
 		init: function(editor) {
 			editor.Events.OnInitData.add(function(sender, data) {
 				data.Columns
@@ -27,12 +25,9 @@ function BanksEdit(params){
 					.setprops("bank_address1", {label:"Address 1"})
 					.setprops("bank_address2", {label:"Address 2"})
 					.setprops("bank_address3", {label:"Address 3"})
-					.setprops("bank_country_code", {label:"Country", 
+					.setprops("bank_country_code", {label:"Country", lookupDataset: desktop.dbCountries,
 						getText: function(column, value) {
-							return column.dataset.get("bank_country");
-						},
-						onChange: function(column) {
-							column.dataset.set("bank_country", column.lookupDataset.Methods.call("lookupValue"));
+							return column.lookupDataset.lookup(value, "country");
 						}
 					})
 					.setprops("beneficiary_name", {label:"Beneficiary Name", required: true})
@@ -40,12 +35,9 @@ function BanksEdit(params){
 					.setprops("beneficiary_address1", {label:"Address 1"})
 					.setprops("beneficiary_address2", {label:"Address 2"})
 					.setprops("beneficiary_address3", {label:"Address 3"})
-					.setprops("beneficiary_country_code", {label:"Country", 
+					.setprops("beneficiary_country_code", {label:"Country", lookupDataset: desktop.dbCountries,
 						getText: function(column, value) {
-							return column.dataset.get("beneficiary_country");
-						},
-						onChange: function(column) {
-							column.dataset.set("beneficiary_country", column.lookupDataset.Methods.call("lookupValue"));
+							return column.lookupDataset.lookup(value, "country");
 						}
 					})
 			});
@@ -59,7 +51,7 @@ function BanksEdit(params){
 						editor.AddEdit("bank_address1");
 						editor.AddEdit("bank_address2");
 						editor.AddEdit("bank_address3");
-						editor.AddLookup("bank_country_code", {width:400, height:310, disableEdit:true, init:CountriesISOLookup});
+						editor.AddLookup("bank_country_code", {width:400, height:310, disableEdit:true, init:CountriesLookup});
 					});
 					
 					editor.AddGroup("Beneficiary Details", function(editor) {
@@ -68,8 +60,9 @@ function BanksEdit(params){
 						editor.AddEdit("beneficiary_address1");
 						editor.AddEdit("beneficiary_address2");
 						editor.AddEdit("beneficiary_address3");
-						editor.AddLookup("beneficiary_country_code", {width:400, height:310, disableEdit:true, init:CountriesISOLookup});
+						editor.AddLookup("beneficiary_country_code", {width:400, height:310, disableEdit:true, init:CountriesLookup});
 					});
+				});
 			});
 		}
 	});
