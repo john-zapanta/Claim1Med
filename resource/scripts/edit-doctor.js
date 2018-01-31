@@ -119,14 +119,20 @@ function DoctorEdit2(params){
 					.setprops("blacklisted", {label:"Blacklisted"})
 					.setprops("name", {label:"Name", required:true})
 					.setprops("full_name", {label:"Full Name"})
-					.setprops("specialisation_code", {label:"Specialisation", required:true, lookupDataset: desktop.dbDoctorSpecialisation,
+					.setprops("specialisation_code", {label:"Specialisation", required:true,
 						getText: function(column, value) {
-							return column.lookupDataset.lookup(value, "specialisation");
+							return column.dataset.get("specialisation");
+						},
+						onChange: function(column) {
+							column.dataset.set("specialisation", column.lookupDataset.Methods.call("lookupValue"));
 						}
 					})
-					.setprops("country_code", {label:"Country", lookupDataset: desktop.dbCountries,
+					.setprops("country_code", {label:"Country", 
 						getText: function(column, value) {
-							return column.lookupDataset.lookup(value, "country");
+							return column.dataset.get("country");
+						},
+						onChange: function(column) {
+							column.dataset.set("country", column.lookupDataset.Methods.call("lookupValue"));
 						}
 					})
 					.setprops("discount_type_id", {label:"Type"})

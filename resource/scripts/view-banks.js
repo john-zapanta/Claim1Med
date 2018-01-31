@@ -20,7 +20,7 @@ function BanksView(params){
 			})
 		},
 		init: function(grid) {
-			grid.Events.OnInitGrid.add(function(grid) {
+			grid.Events.OnInit.add(function(grid) {
 				grid.optionsData.url = "banks";
 				grid.options.horzScroll = true;
 				grid.options.allowSort = true;
