@@ -3,7 +3,7 @@
 	"app_name": "Claims1MED",
 	"app_title": "GO! Claims1MED!",
 	"app_icon": "/images/claims1med-16.png",
-	"res_path": "C:\\Claims1Med\\src\\resource",
+	"res_path": "C:\\GO\\resource",
 	"doc_path": "",
 	"domain": "",
 	"port": 80,

@@ -57,10 +57,13 @@ func init() {
 			dbMmember := dbase.Connections["DBApp"].OpenDataTable("GetClaimMemberInfo", dbase.TParameters{"claim_id":id, "member_id":memberId, "visit_id":vid})
 
 			if id == 0 {
+				claimType := strings.ToUpper(vars["type"])
+				dbClaimType := dbase.Connections["DBApp"].OpenDataTable("GetClaimTypes", dbase.TParameters{"code":claimType, "visit_id":vid})
 				dbClaim.Add(dbase.TDataTableRow{
 					"id": 0,
 					"claim_no": "",
-					"claim_type": strings.ToUpper(vars["type"]),
+					"claim_type": claimType,
+					"claim_type_name": dbClaimType.Get("claim_type").(string),
 					"status_code": "N",
 					"status": "NEW CLAIM",
 					"case_owner": "super",

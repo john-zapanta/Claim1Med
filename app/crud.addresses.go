@@ -6,10 +6,24 @@ import (
 	"ibsi/dbase"
 	"ibsi/crud"
 	"ibsi/utils"
+	// "ibsi/session"
 )
 
 func init() {
 
+	crud.CommandHandle(crud.CommandHandler {
+		Name: "set_default_address",
+		Action: "set-default-address",
+		DataSource: "DBApp.SetDefaultAddress",
+		OnInitCommand: func(cmd crud.CommandHandler, params dbase.TParameters, w http.ResponseWriter, r *http.Request) {
+			// sn := session.GetSession(r)
+			// r.ParseForm() // Parses the request body
+			
+			params["name_id"] = r.Form.Get("name_id")
+			params["address_id"] = r.Form.Get("address_id")
+		},
+	});
+	
 	crud.Handler(crud.CrudHandler {
 		Name: "addresses",
 		Action: "addresses",
@@ -91,6 +105,14 @@ func init() {
 		cmd.NewParameter("address_type", "string", "in", 60, "")
 
 		cmd.NewParameter("action", "int", "in", 0, 10)
+		cmd.NewParameter("visit_id", "int", "in", 0, 0)
+		cmd.NewParameter("action_status_id", "int", "inout", 0, 0)
+		cmd.NewParameter("action_msg", "string", "inout", 200, "")
+	})
+	
+	dbase.Connections["DBApp"].NewCommand("SetDefaultAddress", "SetDefaultAddress", "procedure", func(cmd dbase.ICommand) {
+		cmd.NewParameter("name_id", "int", "in", 0, 0)
+		cmd.NewParameter("address_id", "int", "in", 0, 0)
 		cmd.NewParameter("visit_id", "int", "in", 0, 0)
 		cmd.NewParameter("action_status_id", "int", "inout", 0, 0)
 		cmd.NewParameter("action_msg", "string", "inout", 200, "")

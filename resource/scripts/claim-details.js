@@ -16,11 +16,10 @@ function ClaimDetailsView(params) {
 		view.Events.OnRefresh.add(function(view, data) {
 			// memberData.resetData(data.member_data, "", true);
 		});
-		// console.log("here")
+		
 		view.Events.OnInitContent.add(function(view, container) {
 			new jSplitContainer($.extend(params, {
 				paintParams: {
-					// css: "sp-claim",
 					theme: "white-green-dark"
 				},
 				container: container,
@@ -41,7 +40,8 @@ function ClaimDetailsView(params) {
 							},
 							container: container,
 							init: function(pg) {
-								pg.addTab({caption:"Claim",
+								// pg.addTab({caption:desktop.dbClaim.get("claim_type_name") + " Claim",
+								pg.addTab({caption:desktop.dbClaim.get("claim_type_name"),
 									icon: {
 										name: "view-list",
 										color: "dodgerblue"

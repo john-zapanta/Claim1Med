@@ -81,6 +81,7 @@ function MemberClaimsView(params) {
 				});
 				
 				grid.Events.OnInitToolbar.add(function(grid, toolbar) {
+					// ClaimTypesLookup() refer to view-claim-types-lookup.js
 					toolbar.NewDropDownViewItem({
 						id: "new-claim",
 						icon: "new",
@@ -91,8 +92,6 @@ function MemberClaimsView(params) {
 						view: ClaimTypesLookup,
 						// viewParams: {module:"INV", mode:1},
 						select: function(code) {
-							// window.open(__claim(("new/{0}?type={1}").format(grid.dataset.get("member_id"), code.toLowerCase()), true), "");
-							// window.open(__claim(("new/{0}?type={1}").format(grid.dataParams.get("member_id"), code.toLowerCase()), true), "");
 							window.open(__claim(("new/{0}/{1}").format(code.toLowerCase(), grid.dataParams.get("member_id")), true), "");
 						}
 					});

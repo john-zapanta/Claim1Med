@@ -10,6 +10,31 @@ function ListClaimServices(viewParams) {
 			toolbar: {theme: "svg"}
 		},
 		init: function(grid, callback) {
+			var title, label, module = viewParams.requestParams.module.toUpperCase();
+			
+			if (module == "INV") {
+				title = "Invoice";
+				label = "invoice";
+			} else if (module == "GOP") {
+				title = "Guarantee of Payment";
+				label = "GOP";
+			} else if (module == "NOC") {
+				title = "Notification of Claim";
+				label = "NOC";
+			} else if (module == "CAS") {
+				title = "Case Fee";
+				label = "case fee";
+			} else if (module == "REC") {
+				title = "Recovery of Claim";
+				label = "recovery";
+			} else if (module == "COS") {
+				title = "Cost Containment";
+				label = "cost containment";
+			} else if (module == "FLG") {
+				title = "Flag";
+				label = "flag";
+			}
+			
 			grid.Events.OnInit.add(function(grid) {
 				grid.optionsData.url = "claim-services";
 
@@ -24,7 +49,7 @@ function ListClaimServices(viewParams) {
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams
 						.addColumn("claim_id", viewParams.requestParams.claim_id, {numeric:true})
-						.addColumn("service_type", viewParams.requestParams.module)
+						.addColumn("service_type", module)
 						.addColumn("sort", "service_no")
 						.addColumn("order", "asc")
 				});
@@ -44,11 +69,11 @@ function ListClaimServices(viewParams) {
 						.setprops("status", {label:"Status"})
 						.setprops("sub_status", {label:"Sub-Status"});
 
-					if(viewParams.requestParams.module == "inv") {
+					if(module == "INV") {
 						data.Columns
 							.setprops("invoice_no", {label:"Invoice No."})
 							.setprops("invoice_date", {label:"Date", type:"date"})
-					} else if(viewParams.requestParams.module == "gop") {
+					} else if(module == "GOP") {
 						data.Columns
 							.setprops("start_date", {label:"Admission Date", type:"date"})
 							.setprops("end_date", {label:"Discharge Date", type:"date"})
@@ -68,7 +93,7 @@ function ListClaimServices(viewParams) {
 					// if(params.module === "inv")
 						// return __invoice(id, true)
 					// else if(params.module === "gop")
-						return __service(id, viewParams.requestParams.module, true)
+						return __service(id, module, true)
 				});
 
 				grid.Events.OnInitColumns.add(function(grid) {
@@ -77,7 +102,7 @@ function ListClaimServices(viewParams) {
 						band.NewColumn({fname: "sub_type", width: 200, allowSort: true, fixedWidth:true});
 					});
 
-					if(viewParams.requestParams.module == "inv") {
+					if(module == "INV") {
 						grid.NewBand({caption: "Invoice"}, function(band) {
 							band.NewColumn({fname: "invoice_no", width: 150, allowSort: true, fixedWidth:true});
 							band.NewColumn({fname: "invoice_date", width: 125, allowSort: true, fixedWidth:true});
@@ -94,7 +119,7 @@ function ListClaimServices(viewParams) {
 							band.NewColumn({fname: "paid_amount", width: 100, allowSort: true, fixedWidth:true});
 							band.NewColumn({fname: "eligibility_currency_code", width: 50, allowSort: true, fixedWidth:true});
 						});
-					} else if(viewParams.requestParams.module == "gop") {
+					} else if(module == "GOP") {
 						grid.NewBand({caption: "Admission"}, function(band) {
 							band.NewColumn({fname: "start_date", width: 125, allowSort: true});
 							band.NewColumn({fname: "end_date", width: 125, allowSort: true});
@@ -112,6 +137,25 @@ function ListClaimServices(viewParams) {
 						band.NewColumn({fname: "sub_status", width: 200, allowSort: true});
 					});
 
+				});
+				
+				grid.Events.OnInitToolbar.add(function(grid, toolbar) {
+					// ServiceSubTypesLookup() refer to view-service-sub--types-lookup.js
+					toolbar.NewDropDownViewItem({
+						id: "new-service",
+						icon: "new",
+						color: "#1CA8DD",
+						title: "New " + title,
+						height: 300,
+						subTitle: ("Choose the type of {0} to create.").format(label),
+						view: ServiceSubTypesLookup,
+						viewParams: {serviceType:module},
+						select: function(code) {
+							// console.log(code.toLowerCase())
+							// console.log(grid.dataParams.get("claim_id"))
+							window.open(__newservice(grid.dataParams.get("claim_id"), module, code, true), "");
+						}
+					});
 				});
 			});
 		}
