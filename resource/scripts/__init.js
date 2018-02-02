@@ -39,7 +39,15 @@ function __member(id, get) {
 function __service(id, module, get) {
 	// return __open(("/app/service/{1}?type={0}").format(module.toLowerCase(), id), get);
 	// return __open(("/app/service/{1}/{0}").format(module.toLowerCase(), id), get);
-	return __open(("/app/service/{0}/{1}").format(module.toLowerCase(), id), get);
+	// return __open(("/app/service/{0}/{1}").format(module.toLowerCase(), id), get);
+	// return __open(("/app/service/{0}/{1}").format(module, id), get);
+	return __open(("/app/{0}/{1}").format(module.toLowerCase(), id), get);
+};
+
+function __newservice(id, module, type, get) {
+	// return __open(("/app/service/new/{0}/{1}/{2}").format(module.toLowerCase(), type.trim().toLowerCase(), id), get);
+	// return __open(("/app/service/new/{0}/{1}/{2}").format(module, type.trim(), id), get);
+	return __open(("/app/{0}/new/{1}/{2}").format(module.toLowerCase(), type.trim(), id), get);
 };
 
 function __invoice(id, get) {

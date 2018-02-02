@@ -11,3 +11,9 @@
 
 ##template
 ##endtemplate=app\providers-medical
+
+##template
+##endtemplate=app\addresses
+
+##template
+##endtemplate=app\contacts

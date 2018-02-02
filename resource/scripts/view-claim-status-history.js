@@ -105,7 +105,8 @@ function ClaimStatusHistoryView(params) {
 				});
 				
 				grid.Events.OnInitToolbar.add(function(view, toolbar) {
-					if (desktop.dbClaim.get("status_code") === "O") {
+					var status = desktop.dbClaim.get("status_code");
+					if (status === "O" || status === "N") {
 						toolbar.NewDropDownConfirmItem({
 							id: "close",
 							icon: "claim-close",
@@ -139,7 +140,7 @@ function ClaimStatusHistoryView(params) {
 						});
 					}
 					
-					if (desktop.dbClaim.get("status_code") != "O") {
+					if (status != "O" && status != "N") {
 						toolbar.NewDropDownConfirmItem({
 							id: "open",
 							icon: "claim-open",
