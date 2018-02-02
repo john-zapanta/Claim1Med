@@ -65,6 +65,8 @@ MainPage.prototype.AfterPaint = function() {
 		.setprops("status", {label:"Status", readonly:true})
 		.setprops("notification_date", {label:"Date Notified", type:"date", required:true})
 
+		.setprops("plan_code", {readonly:true})
+		.setprops("plan_code2", {readonly:true})
 		.setprops("sub_product", {label:"Sub-Product", readonly:true})
 		.setprops("hcm_reference", {label:"Assistance Ref. No."})
 		.setprops("reference_no1", {label:desktop.dbMember.get("claim_reference1")})
@@ -75,6 +77,7 @@ MainPage.prototype.AfterPaint = function() {
 		.setprops("expired", {label:"Expired"})
 		.setprops("plan_name", {label:"Type", required:false})
 
+		.setprops("notification_date", {label:"Notification Date", type:"date", required:true})
 		.setprops("country_of_incident", {label:"Country of Incident", required:true, lookupDataset: desktop.dbCountries,
 			getText: function(column, value) {
 				return column.lookupDataset.lookup(value, "country");
@@ -85,7 +88,7 @@ MainPage.prototype.AfterPaint = function() {
 		.setprops("accident_date", {label:"Date of Accident", type:"date", required:desktop.dbClaim.raw("is_accident")})
 		.setprops("accident_code", {label:"Accident Type", required:desktop.dbClaim.raw("is_accident")})
 
-		.setprops("is_prexisting", {label:"Pre-Existing"})
+		.setprops("is_preexisting", {label:"Pre-Existing"})
 		.setprops("first_symptom_date", {label:"First Symptom", type:"date", required:!desktop.dbClaim.raw("is_accident")})
 		.setprops("first_consultation_date", {label:"First Consultation", type:"date", required:!desktop.dbClaim.raw("is_accident")});
 
@@ -200,3 +203,73 @@ MainPage.prototype.AddNotification = function(params) {
 
 	}, "nofification-info");
 };
+
+MainPage.prototype.ValidateActionEx = function(params) {
+	desktop.Ajax(
+		this, 
+		"/app/command/validate-action", 
+		{
+			id: params.id,
+			key_id: params.key_id,
+			string_value: params.string_value
+		}, 
+		function(result) {
+			var message = result.message.replaceAll("\r", "<br>");
+			
+			if (result.status == 1) {
+				ErrorDialog({
+					target: params.e,
+					title: params.title,
+					message: message
+				});
+			} else if (result.status == 2) {
+				InfoDialog({
+				// ErrorDialog({
+					target: params.e,
+					title: defaultValue(result.action_name, "Information"),
+					message: message
+				});
+				// Form.DlgInfo(ActionName, ErrorMessage, [0]);
+			} else {
+				params.callback(result);
+			}
+		}
+	)
+};
+
+MainPage.prototype.CanDeleteClaim = function(params) {
+	desktop.Ajax(
+		this, 
+		"/app/command/can-delete-claim", 
+		{
+			id: params.id,
+			change_plan: params.change_plan
+		}, 
+		function(result) {
+			params.callback(result);
+		}
+	)
+};
+
+// MainPage.prototype.UpdateClaimData = function(params) {
+	// desktop.Ajax(
+		// this, 
+		// "/app/get/update/claim-details", 
+		// {
+			// id: params.id,
+			// mode: "edit",
+			// data: "["+ JSON.stringify(params.data) +"]"
+		// }, 
+		// function(result) {
+			// if (result.status == 0) {
+				// location.reload();
+			// } else {
+				// ErrorDialog({
+					// target: column.element,
+					// title: "Error: " + params.title,
+					// message: result.message
+				// });
+			// }
+		// }
+	// )
+// };

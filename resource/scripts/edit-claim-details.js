@@ -28,7 +28,7 @@ function ClaimDetailsEdit(viewParams) {
 							if(columnName == "is_accident" || columnName === undefined) {
 								var isAccident = group.dataset.get("is_accident");
 								// console.log(editor)
-								editor.SetVisible("is_prexisting", !isAccident);
+								editor.SetVisible("is_preexisting", !isAccident);
 								editor.SetVisible("first_symptom_date", !isAccident);
 								editor.SetVisible("first_consultation_date", !isAccident);
 
@@ -46,10 +46,12 @@ function ClaimDetailsEdit(viewParams) {
 						editor.AddGroup("Basic Claim Information", function(editor) {
 							editor.AddEdit({ID: "id"});
 							editor.AddEdit({ID: "claim_no"});
-							editor.AddEdit({ID: "claim_type"});
+							// editor.AddEdit({ID: "claim_type"});
 							editor.AddEdit({ID: "case_owner"});
-							editor.AddEdit({ID: "status"});
+							// editor.AddEdit({ID: "status"});
+							editor.AddEdit({ID: "notification_date"});
 						});
+						
 						editor.AddGroup("Reference Numbers", function(editor) {
 							editor.AddEdit({ID: "hcm_reference"});
 							if(desktop.dbMember.get("claim_reference1")) {
@@ -93,7 +95,7 @@ function ClaimDetailsEdit(viewParams) {
 							// editor.AddEdit({ID: "accident_code"}, {visible:editor.Dataset.get("is_accident")});
 							editor.AddEdit("accident_date");
 							editor.AddEdit("accident_code");
-							editor.AddRadioButton("is_prexisting", {
+							editor.AddRadioButton("is_preexisting", {
 								key: "id",
 								value: "value",
 								data: [
@@ -117,6 +119,11 @@ function ClaimDetailsEdit(viewParams) {
 								editor.AddTimeStamp({ID:"update_date", name:"update_user_name", label:"Last updated by"});
 							});
 						};
+						
+						// editor.AddGroup("Debug", function(editor) {
+							// editor.AddEdit("plan_code");
+							// editor.AddEdit("plan_code2");
+						// });
 					}
 				);
 			});

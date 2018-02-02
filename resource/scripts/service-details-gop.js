@@ -5,12 +5,9 @@
 //==================================================================================================
 // File name: service-details.js
 //==================================================================================================
-function InitializeData(service, serviceData) {
+function InitializeData(service) {
 	service.Columns
-		.setprops("claim_currency_code", {readonly:true});
-
-	serviceData.Columns
-		.setprops("id", {label:"ID", numeric:true, key: true, readonly:true})
+		.setprops("claim_currency_code", {readonly:true})
 		.setprops("provider_id", {label:"", numeric:true})
 		.setprops("provider_name", {label:"Hospital's Name", required:true})
 		.setprops("hospital_medical_record", {label:"Medical Record #"})
@@ -41,7 +38,7 @@ function ServiceDetailsView(viewParams) {
 		view.Events.OnInitContent.add(function(view, container) {
 			new jSplitContainer($.extend(viewParams, {
 				paintParams: {
-					css: "members"
+					theme: "white-green-dark"
 				},
 				container: container,
 				orientation: "vert",
@@ -52,6 +49,7 @@ function ServiceDetailsView(viewParams) {
 					splitter.events.OnPaintPane1.add(function(splitter, container) {
 						new jPageControl({
 							paintParams: {
+								css: "pg-service-detail",
 								theme: "service-details",
 								icon: {
 									size: 20,
@@ -67,9 +65,9 @@ function ServiceDetailsView(viewParams) {
 									},
 									OnCreate: function(tab) {
 										new jSplitContainer($.extend(viewParams, {
-											// paintParams: {
-												// css: "members"
-											// },
+											paintParams: {
+												theme: "white-green-dark"
+											},
 											container: tab.container,
 											orientation: "horz",
 											size: 50,
@@ -77,14 +75,15 @@ function ServiceDetailsView(viewParams) {
 											noBorder: true,
 											init: function(splitter) {
 												splitter.events.OnPaintPane1.add(function(splitter, container) {
-													container.addClass("bordered-content");
-													container.css("border-style", "solid solid solid none");
-													ServiceCustomEdit({container: container, dataset:desktop.dbServiceSubType});
+													// container.addClass("bordered-content");
+													// container.css("border-style", "solid none none none");
+													ServiceCustomEdit({container: container, dataset:desktop.dbService});
 												});
 												
 												splitter.events.OnPaintPane2.add(function(splitter, container) {
 													new jPageControl({
 														paintParams: {
+															css: "pg-service-detail",
 															theme: "service-details",
 															icon: {
 																size: 20,
@@ -99,8 +98,8 @@ function ServiceDetailsView(viewParams) {
 																	color: "forestgreen"
 																},
 																OnCreate: function(tab) {
-																	tab.container.addClass("bordered-content");
-																	tab.container.css("border-style", "solid solid none none");
+																	// tab.container.addClass("bordered-content");
+																	// tab.container.css("border-style", "solid solid none none");
 																	CalculationDatesEdit({container: tab.container, dataset:desktop.dbCalculationDates});
 																}
 															});
@@ -111,8 +110,8 @@ function ServiceDetailsView(viewParams) {
 																	color: "dodgerblue"
 																},
 																OnCreate: function(tab) {
-																	tab.container.addClass("bordered-content");
-																	tab.container.css("border-style", "solid solid none none");
+																	// tab.container.addClass("bordered-content");
+																	// tab.container.css("border-style", "solid solid none none");
 																	EstimatesEdit({container: tab.container, dataset:desktop.dbEstimates});
 																}
 															});
@@ -168,6 +167,7 @@ function ServiceDetailsView(viewParams) {
 					splitter.events.OnPaintPane2.add(function(splitter, container) {						
 						new jPageControl({
 							paintParams: {
+								css: "pg-service-detail",
 								theme: "service-details",
 								icon: {
 									size: 20,
@@ -182,8 +182,8 @@ function ServiceDetailsView(viewParams) {
 										color: "dodgerblue"
 									},
 									OnCreate: function(tab) {
-										tab.container.addClass("bordered-content");
-										tab.container.css("border-style", "solid none none solid");
+										// tab.container.addClass("bordered-content");
+										// tab.container.css("border-style", "solid none none solid");
 										ServiceEdit({container:tab.container, dataset:desktop.dbService});
 									}
 								});
@@ -193,8 +193,8 @@ function ServiceDetailsView(viewParams) {
 										color: "firebrick"
 									},
 									OnCreate: function(tab) {
-										tab.container.addClass("bordered-content");
-										tab.container.css("border-style", "solid none none solid");
+										// tab.container.addClass("bordered-content");
+										// tab.container.css("border-style", "solid none none solid");
 										ServiceStatusView({container:tab.container, requestParams:{service_id:desktop.dbService.get("id")}})										
 									}
 								});
@@ -204,8 +204,8 @@ function ServiceDetailsView(viewParams) {
 										color: "forestgreen"
 									},
 									OnCreate: function(tab) {
-										tab.container.addClass("bordered-content");
-										tab.container.css("border-style", "solid none none solid");
+										// tab.container.addClass("bordered-content");
+										// tab.container.css("border-style", "solid none none solid");
 										ServiceActionsView({container:tab.container, requestParams:{service_id:desktop.dbService.get("id")}})
 									}
 								});

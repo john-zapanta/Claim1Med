@@ -1,6 +1,6 @@
 {
 	"name": "member-claims",
-	"action": "member-claims",
+	"action": "claim",
 	"path": "",
 	"key_name": "id",
 	"list_datasource": "DBApp.GetMemberClaims",
@@ -8,7 +8,7 @@
 	"update_datasource": "",
 	"rights": {
 		"add": false,
-		"edit": false,
+		"edit": true,
 		"delete": false
 	}
 }

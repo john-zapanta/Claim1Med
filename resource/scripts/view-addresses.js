@@ -7,9 +7,6 @@
 // uses edit-address.js
 //==================================================================================================
 function AddressesView(params){
-	// var name_id = params.nameID ? params.nameID : params.requestParams.name_id;
-	// var name_id = params.getMasterID();
-	// console.log(params.getMasterID())
 	return new jGrid($.extend(params, {
 		paintParams: {
 			css: "addresses",
@@ -17,7 +14,6 @@ function AddressesView(params){
 		},
 		editForm: function(id, container, dialog) {
 			AddressEdit({
-				// url: ("?id={0}&name_id={1}").format(id, name_id),
 				url: ("?id={0}&name_id={1}").format(id, params.getMasterID()),
 				container: container,
 				dialog: dialog
@@ -33,7 +29,6 @@ function AddressesView(params){
 							
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams
-						// .addColumn("name_id", name_id, {numeric:true})
 						.addColumn("name_id", params.getMasterID(), {numeric:true})
 						.addColumn("sort", "street")
 						.addColumn("order", "asc")
@@ -51,8 +46,72 @@ function AddressesView(params){
 				grid.Events.OnInitRow.add(function(grid, row) {	
 					row.attr("x-status", grid.dataset.get("is_default"))
 				});
+		
+				grid.methods.add("getCommandHeaderIcon", function(grid, column, defaultValue) {
+					if(column.command === "default")
+						return "override"
+					else
+						return defaultValue
+				});
+		
+				grid.methods.add("getCommandIcon", function(grid, column, defaultValue) {
+					if(column.command === "default")
+						return "override"
+					else
+						return defaultValue
+				});
+		
+				grid.methods.add("getCommandHint", function(grid, column, defaultValue) {
+					if(column.command === "default")
+						return "Set as default address"
+					else
+						return defaultValue
+				});
+
+				grid.methods.add("allowCommand", function(grid, column, defaultValue) {
+					if(column.command === "default")
+						return grid.dataset.get("is_default") === 0
+					else
+						return defaultValue
+				});
+
+				grid.Events.OnCommand.add(function(grid, column) {
+					if(column.command === "default") {
+						// column.element is the cell container
+						ConfirmDialog({
+							target: column.element,
+							title: "Set Default",
+							message: "Please confirm to set address as default.",
+							callback: function(dialog) {
+								desktop.Ajax(
+									self, 
+									"/app/command/set_default_address", 
+									{
+										name_id: params.getMasterID(),
+										address_id: grid.dataset.getKey()
+									}, 
+									function(result) {
+										if (result.status == 0) {
+											grid.refresh();
+										} else {
+											ErrorDialog({
+												target: column.element,
+												title: "Error: Set Default",
+												message: result.message
+											});
+										}
+									}
+								)
+							}
+						});
+					};
+				});
 
 				grid.Events.OnInitColumns.add(function(grid) {
+					grid.NewBand({caption: "...", fixed:"left"} , function(band) {
+						band.NewCommand({command:"default"});
+					});
+					
 					grid.NewColumn({fname: "address_type_name", width: 150, allowSort: true, fixedWidth:true});
 					grid.NewColumn({fname: "street", width: 250, allowSort: true, fixedWidth:true});
 					grid.NewColumn({fname: "city", width: 200, allowSort: true, fixedWidth:true});

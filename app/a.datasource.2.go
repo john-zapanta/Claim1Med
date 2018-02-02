@@ -230,8 +230,8 @@ func init() {
 
 	dbase.Connections["DBApp"].NewCommand("GetClients", "GetClients", "procedure", func(cmd dbase.ICommand) {
 		cmd.NewParameter("id", "int", "in", 0, 0)
-		cmd.NewParameter("lookup", "int", "in", 0, 0)
 		cmd.NewParameter("filter", "string", "in", 100, "")
+		cmd.NewParameter("action", "int", "in", 0, 1)
 		cmd.NewParameter("page", "int", "in", 0, 1)
 		cmd.NewParameter("pagesize", "int", "in", 0, 0)
 		cmd.NewParameter("row_count", "int", "inout", 0, 0)

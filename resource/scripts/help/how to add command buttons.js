@@ -14,12 +14,6 @@ function MemberPlanHistoryView(viewParams){
 		editForm: function(id, container, dialog) {
 		},
 		init: function(grid, callback) {			
-			desktop.dbClaim.Events.OnCancel.add(function(dataset) {
-				desktop.dbMember.cancel();
-				grid.refresh(true);
-				// console.log("ok");
-			});
-			
 			grid.Events.OnInit.add(function(grid) {
 				grid.optionsData.url = "app/member-plan-history";
 				
@@ -107,128 +101,19 @@ function MemberPlanHistoryView(viewParams){
 						return defaultValue
 				});
 
-				grid.methods.add("allowCommand", function(grid, column, defaultValue) {
-					if(column.command === "override1")
-						return grid.dataset.get("plan_code").trim() !== desktop.dbClaim.get("plan_code").trim()
-					else
-						return defaultValue
-				});
+				// grid.methods.add("allowCommand", function(grid, column, defaultValue) {
+					// if(column.command === "override1")
+						// return grid.dataset.get("plan_code").trim() !== desktop.dbMember.get("plan_code").trim()
+						// return grid.dataset.get("plan_code").trim() !== desktop.dbClaim.get("plan_code").trim()
+					// else
+						// return defaultValue
+				// });
 
 				grid.Events.OnCommand.add(function(grid, column) {
-					var title = "Override Plan from same Product";
-					if(column.command === "override2") {
-						desktop.ValidateActionEx({
-							e: column.element,
-							id: 500001,
-							key_id: desktop.dbClaim.getKey(),
-							string_value: grid.dataset.get("plan_code"),
-							title: title,
-							callback: function(result) {
-								desktop.CanDeleteClaim({
-									id: desktop.dbClaim.getKey(),
-									change_plan: 1,
-									callback: function(result) {
-										if (result.status) {
-											ErrorDialog({
-												target: column.element,
-												title: title,
-												message: result.message
-											});
-										} else {
-											desktop.ValidateActionEx({
-												e: column.element,
-												id: 500002,
-												key_id: desktop.dbClaim.getKey(),
-												string_value: grid.dataset.get("plan_code"),
-												title: title,
-												callback: function(result) {
-													ConfirmDialog({
-														target: column.element,
-														title: title,
-														message: ("Are you sure you want to override current plan <b>{0}</b> to <b>{1}</b>?").format(grid.dataset.get("plan_code").trim(), result.action_name),
-														callback: function(dialog) {
-															desktop.dbMember.set("plan_code", grid.dataset.get("plan_code").trim());
-															
-															desktop.dbClaim.set("sub_product", grid.dataset.get("sub_product").trim());
-															desktop.dbClaim.set("plan_code", result.action_name);
-															desktop.dbClaim.set("plan_code2", grid.dataset.get("plan_code").trim());
-															
-															desktop.ValidateActionEx({
-																e: desktop.claimInfoContainer,
-																id: 300002,
-																key_id: desktop.dbClaim.getKey(),
-																string_value: desktop.dbMember.get("plan_code"),
-																callback: function(result) {
-																}
-															})
-															
-															// var claim = desktop.dbClaim.data[0];
-															// claim.plan_code = result.action_name;
-															// claim.plan_code2 = grid.dataset.get("plan_code").trim();
-															// claim.sub_product = grid.dataset.get("sub_product").trim();
-															
-															// desktop.UpdateClaimData({
-																// id: desktop.dbClaim.getKey(),
-																// data: claim,
-																// title: "Override Plan from same Product"
-															// })
-														}
-													});
-												}
-											});
-										}
-									}
-								});
-							}
-						});
-					} else if(column.command === "override1") {
-						desktop.Ajax(
-							self, 
-							"/app/command/can-delete-claim", 
-							{
-								id: desktop.dbClaim.getKey(),
-								change_plan: 1
-							}, 
-							function(result) {
-								if (result.status == 0) {
-									ConfirmDialog({
-										target: column.element,
-										title: "Override Plan",
-										message: ("Please confirm to override the current plan <b>{0}</b> with <b>{1}</b>.").format(desktop.dbClaim.get("plan_code").trim(), grid.dataset.get("plan_code").trim()),
-										callback: function(dialog) {
-											desktop.dbMember.set("plan_code", grid.dataset.get("plan_code").trim());
-											
-											desktop.dbClaim.set("sub_product", grid.dataset.get("sub_product").trim());
-											desktop.dbClaim.set("plan_code", grid.dataset.get("plan_code").trim());
-											desktop.dbClaim.set("plan_code2", "");
-											
-											grid.refresh(true);
-											
-											// desktop.dbClaim.Events.OnCancel.add(function(dataset) {
-												// desktop.dbMember.cancel();
-												// grid.refresh(true);
-											// });
-											// var claim = desktop.dbClaim.data[0];
-											// claim.plan_code = grid.dataset.get("plan_code").trim();
-											// claim.plan_code2 = "";
-											// claim.sub_product = grid.dataset.get("sub_product").trim();
-											
-											// desktop.UpdateClaimData({
-												// id: desktop.dbClaim.getKey(),
-												// data: claim,
-												// title: "Override Plan"
-											// })
-										}
-									});
-								} else {
-									ErrorDialog({
-										target: column.element,
-										title: "Error: Override Plan",
-										message: result.message
-									});
-								}
-							}
-						)
+					if(column.command === "override1") {
+						// __report(grid.dataset.get("id"));
+						// column.element is the cell container
+						console.log(column)
 					};
 				});
 				
@@ -249,8 +134,6 @@ function MemberPlanHistoryView(viewParams){
 					grid.NewBand({caption: "...", fixed:"left"} , function(band) {
 						band.NewCommand({command:"override1"});
 						band.NewCommand({command:"override2"});
-						// band.NewCommand({command:"override2"});
-						// band.NewColumn({fname: "sequence_no", width: 30});
 					});
 					
 					grid.NewBand({caption: "..."} , function(band) {

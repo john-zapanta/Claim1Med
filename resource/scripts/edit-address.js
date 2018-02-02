@@ -20,7 +20,7 @@ function AddressEdit(params){
 					.setprops("id", {label:"ID", numeric:true, key: true})
 					.setprops("name_id", {label: "name id", numeric:true})
 					.setprops("street", {label:"Street", required:true})
-					.setprops("city", {label:"City", required:true})
+					.setprops("city", {label:"City"})
 					.setprops("province", {label:"Province"})
 					.setprops("zip_code", {label:"Zip Code"})
 					.setprops("country", {label:"Country"})
