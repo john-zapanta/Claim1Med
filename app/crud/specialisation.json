@@ -1,0 +1,14 @@
+{
+	"name": "specialisation",
+	"action": "specialisation",
+	"path": "",
+	"key_name": "id",
+	"list_datasource": "DBApp.GetDoctorSpecialisation",
+	"edit_datasource": "",
+	"update_datasource": "DBApp.GetDoctorSpecialisation",
+	"rights": {
+		"add": false,
+		"edit": false,
+		"delete": false
+	}
+}
