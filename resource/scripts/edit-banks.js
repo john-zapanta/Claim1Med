@@ -25,9 +25,12 @@ function BanksEdit(params){
 					.setprops("bank_address1", {label:"Address 1"})
 					.setprops("bank_address2", {label:"Address 2"})
 					.setprops("bank_address3", {label:"Address 3"})
-					.setprops("bank_country_code", {label:"Country", lookupDataset: desktop.dbCountries,
+					.setprops("bank_country_code", {label:"Country", 
 						getText: function(column, value) {
-							return column.lookupDataset.lookup(value, "country");
+							return column.dataset.get("bank_country");
+						},
+						onChange: function(column) {
+							column.dataset.set("bank_country", column.lookupDataset.Methods.call("lookupValue"));
 						}
 					})
 					.setprops("beneficiary_name", {label:"Beneficiary Name", required: true})
@@ -35,9 +38,12 @@ function BanksEdit(params){
 					.setprops("beneficiary_address1", {label:"Address 1"})
 					.setprops("beneficiary_address2", {label:"Address 2"})
 					.setprops("beneficiary_address3", {label:"Address 3"})
-					.setprops("beneficiary_country_code", {label:"Country", lookupDataset: desktop.dbCountries,
+					.setprops("beneficiary_country_code", {label:"Country",
 						getText: function(column, value) {
-							return column.lookupDataset.lookup(value, "country");
+							return column.dataset.get("beneficiary_country");
+						},
+						onChange: function(column) {
+							column.dataset.set("beneficiary_country", column.lookupDataset.Methods.call("lookupValue"));
 						}
 					})
 			});
@@ -51,7 +57,7 @@ function BanksEdit(params){
 						editor.AddEdit("bank_address1");
 						editor.AddEdit("bank_address2");
 						editor.AddEdit("bank_address3");
-						editor.AddLookup("bank_country_code", {width:400, height:310, disableEdit:true, init:CountriesLookup});
+						editor.AddLookup("bank_country_code", {width:400, height:310, disableEdit:true, init:CountriesISOLookup});
 					});
 					
 					editor.AddGroup("Beneficiary Details", function(editor) {
@@ -60,7 +66,7 @@ function BanksEdit(params){
 						editor.AddEdit("beneficiary_address1");
 						editor.AddEdit("beneficiary_address2");
 						editor.AddEdit("beneficiary_address3");
-						editor.AddLookup("beneficiary_country_code", {width:400, height:310, disableEdit:true, init:CountriesLookup});
+						editor.AddLookup("beneficiary_country_code", {width:400, height:310, disableEdit:true, init:CountriesISOLookup});
 					});
 				});
 			});

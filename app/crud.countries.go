@@ -15,7 +15,9 @@ func init() {
 		ListDataSource: "DBApp.GetCountries",
 		UpdateDataSource: "DBApp.AddCountries",
 		OnInitCrud: func(crud map[string]bool) {
-			// crud["delete"] = false
+			crud["add"] = false
+			crud["edit"] = false
+			crud["delete"] = false
 		},
 		OnNewRecord: func(mode string, row map[string]interface{}, w http.ResponseWriter, r *http.Request) {
 			// row["ewt"] = 0
