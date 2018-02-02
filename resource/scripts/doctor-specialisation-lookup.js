@@ -17,7 +17,7 @@ var DoctorSpecialisationLookup = function(edit, grid) {
 			.addColumn("sort", "specialisation")
 			.addColumn("order", "asc")
 			.addColumn("page", 1)
-			.addColumn("pagesize")
+			.addColumn("pagesize", 1000000)
 	});
 
 	grid.Events.OnInitData.add(function(grid, data) {
