@@ -97,6 +97,7 @@ func init() {
 					s.Action = "admin"
 					s.Url = "app/claim-details"
 					s.Css = "*"
+					s.Scripts = "*"
 					s.Run = "ClaimDetailsView"
 					s.Params["claim_id"] = id
 					// If ClaimType = "MED"

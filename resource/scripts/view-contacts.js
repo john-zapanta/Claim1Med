@@ -7,7 +7,14 @@
 // uses edit-contacts.js
 //==================================================================================================
 function ContactsView(params){
-	// var name_id = params.nameID ? params.nameID : params.requestParams.name_id;
+	function MasterKey() {
+		if(params.getMasterID) {
+			return params.getMasterID()
+		} else {
+			return params.requestParams.name_id
+		}
+	};
+	
 	return new jGrid($.extend(params, {
 		paintParams: {
 			css: "contacts",
@@ -15,7 +22,7 @@ function ContactsView(params){
 		},
 		editForm: function(id, container, dialog) {
 			ContactsEdit({
-				url: ("?id={0}&name_id={1}").format(id, params.getMasterID()),
+				url: ("?id={0}&name_id={1}").format(id, MasterKey()),
 				container: container,
 				// containerPadding: 0,
 				// showToolbar: false,
@@ -35,7 +42,7 @@ function ContactsView(params){
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams
 						// .addColumn("name_id", name_id, {numeric:true})
-						.addColumn("name_id", params.getMasterID(), {numeric:true})
+						.addColumn("name_id", MasterKey(), {numeric:true})
 						.addColumn("sort", "full_name")
 						.addColumn("order", "asc")
 				});
