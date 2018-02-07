@@ -101,16 +101,6 @@ func init() {
 		cmd.NewParameter("visit_id", "int", "in", 0, 0)
 	})
 
-	dbase.Connections["DBApp"].NewCommand("GetPlan", "GetPlan", "procedure", func(cmd dbase.ICommand) {
-		cmd.NewParameter("code", "string", "in", 10, "")
-		cmd.NewParameter("visit_id", "int", "in", 0, 0)
-	})
-
-	dbase.Connections["DBApp"].NewCommand("GetProduct", "GetProduct", "procedure", func(cmd dbase.ICommand) {
-		cmd.NewParameter("code", "string", "in", 10, "")
-		cmd.NewParameter("visit_id", "int", "in", 0, 0)
-	})
-
 	dbase.Connections["DBApp"].NewCommand("GetClient", "GetClient", "procedure", func(cmd dbase.ICommand) {
 		cmd.NewParameter("id", "int", "in", 0, 0)
 		cmd.NewParameter("visit_id", "int", "in", 0, 0)
@@ -225,32 +215,6 @@ func init() {
 
 	dbase.Connections["DBApp"].NewCommand("GetProviderDiscount", "GetProviderDiscount", "procedure", func(cmd dbase.ICommand) {
 		cmd.NewParameter("id", "int", "in", 0, 1)
-		cmd.NewParameter("visit_id", "int", "in", 0, 0)
-	})
-
-	dbase.Connections["DBApp"].NewCommand("GetClients", "GetClients", "procedure", func(cmd dbase.ICommand) {
-		cmd.NewParameter("id", "int", "in", 0, 0)
-		cmd.NewParameter("filter", "string", "in", 100, "")
-		cmd.NewParameter("action", "int", "in", 0, 1)
-		cmd.NewParameter("page", "int", "in", 0, 1)
-		cmd.NewParameter("pagesize", "int", "in", 0, 0)
-		cmd.NewParameter("row_count", "int", "inout", 0, 0)
-		cmd.NewParameter("page_count", "int", "inout", 0, 0)
-		cmd.NewParameter("sort", "string", "in", 200, "name")
-		cmd.NewParameter("order", "string", "in", 10, "asc")
-		cmd.NewParameter("visit_id", "int", "in", 0, 0)
-	})
-
-	dbase.Connections["DBApp"].NewCommand("GetProducts", "GetProducts", "procedure", func(cmd dbase.ICommand) {
-		cmd.NewParameter("code", "string", "in", 10, "")
-		cmd.NewParameter("lookup", "int", "in", 0, 0)
-		cmd.NewParameter("filter", "string", "in", 100, "")
-		cmd.NewParameter("page", "int", "in", 0, 1)
-		cmd.NewParameter("pagesize", "int", "in", 0, 0)
-		cmd.NewParameter("row_count", "int", "inout", 0, 0)
-		cmd.NewParameter("page_count", "int", "inout", 0, 0)
-		cmd.NewParameter("sort", "string", "in", 200, "product_name")
-		cmd.NewParameter("order", "string", "in", 10, "asc")
 		cmd.NewParameter("visit_id", "int", "in", 0, 0)
 	})
 
@@ -616,6 +580,44 @@ func init() {
 	})
 
 	dbase.Connections["DBApp"].NewCommand("GetCustomerServiceData", "GetCustomerServiceData", "procedure", func(cmd dbase.ICommand) {
+		cmd.NewParameter("visit_id", "int", "in", 0, 0)
+	})
+
+	// dbase.Connections["DBApp"].NewCommand("GetProduct", "GetProduct", "procedure", func(cmd dbase.ICommand) {
+		// cmd.NewParameter("code", "string", "in", 10, "")
+		// cmd.NewParameter("visit_id", "int", "in", 0, 0)
+	// })
+
+	dbase.Connections["DBApp"].NewCommand("GetProducts", "GetProducts", "procedure", func(cmd dbase.ICommand) {
+		cmd.NewParameter("code", "string", "in", 10, "")
+		cmd.NewParameter("client_id", "int", "in", 0, 0)
+		cmd.NewParameter("filter", "string", "in", 100, "")
+		cmd.NewParameter("action", "int", "in", 0, 0)
+		cmd.NewParameter("page", "int", "in", 0, 1)
+		cmd.NewParameter("pagesize", "int", "in", 0, 0)
+		cmd.NewParameter("row_count", "int", "inout", 0, 0)
+		cmd.NewParameter("page_count", "int", "inout", 0, 0)
+		cmd.NewParameter("sort", "string", "in", 200, "product_name")
+		cmd.NewParameter("order", "string", "in", 10, "asc")
+		cmd.NewParameter("visit_id", "int", "in", 0, 0)
+	})
+
+	// dbase.Connections["DBApp"].NewCommand("GetPlan", "GetPlan", "procedure", func(cmd dbase.ICommand) {
+		// cmd.NewParameter("code", "string", "in", 10, "")
+		// cmd.NewParameter("visit_id", "int", "in", 0, 0)
+	// })
+
+	dbase.Connections["DBApp"].NewCommand("GetPlans", "GetPlans", "procedure", func(cmd dbase.ICommand) {
+		cmd.NewParameter("code", "string", "in", 10, "")
+		cmd.NewParameter("product_code", "string", "in", 10, "")
+		cmd.NewParameter("filter", "string", "in", 100, "")
+		cmd.NewParameter("action", "int", "in", 0, 0)
+		cmd.NewParameter("page", "int", "in", 0, 1)
+		cmd.NewParameter("pagesize", "int", "in", 0, 0)
+		cmd.NewParameter("row_count", "int", "inout", 0, 0)
+		cmd.NewParameter("page_count", "int", "inout", 0, 0)
+		cmd.NewParameter("sort", "string", "in", 200, "code")
+		cmd.NewParameter("order", "string", "in", 10, "asc")
 		cmd.NewParameter("visit_id", "int", "in", 0, 0)
 	})
 }

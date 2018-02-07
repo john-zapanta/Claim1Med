@@ -7,6 +7,14 @@
 // uses edit-address.js
 //==================================================================================================
 function AddressesView(params){
+	function MasterKey() {
+		if(params.getMasterID) {
+			return params.getMasterID()
+		} else {
+			return params.requestParams.name_id
+		}
+	};
+	
 	return new jGrid($.extend(params, {
 		paintParams: {
 			css: "addresses",
@@ -14,7 +22,7 @@ function AddressesView(params){
 		},
 		editForm: function(id, container, dialog) {
 			AddressEdit({
-				url: ("?id={0}&name_id={1}").format(id, params.getMasterID()),
+				url: ("?id={0}&name_id={1}").format(id, MasterKey()),
 				container: container,
 				dialog: dialog
 			})
@@ -29,7 +37,7 @@ function AddressesView(params){
 							
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams
-						.addColumn("name_id", params.getMasterID(), {numeric:true})
+						.addColumn("name_id", MasterKey(), {numeric:true})
 						.addColumn("sort", "street")
 						.addColumn("order", "asc")
 				});
@@ -87,7 +95,7 @@ function AddressesView(params){
 									self, 
 									"/app/command/set_default_address", 
 									{
-										name_id: params.getMasterID(),
+										name_id: MasterKey(),
 										address_id: grid.dataset.getKey()
 									}, 
 									function(result) {

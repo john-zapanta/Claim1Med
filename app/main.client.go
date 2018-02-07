@@ -66,7 +66,6 @@ func init() {
 			}
 			
 			utils.NewNavigatorItem(p.Nav, "client", "Client", func(item *utils.NavigatorItem) {
-			
 				utils.NewMenuItem(item, func(s *utils.MenuItem) {
 					s.ID = "details"
 					s.Title = "Details"
@@ -78,54 +77,77 @@ func init() {
 					s.Params["client_id"] = id
 				})
 			
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "call-log"
-					// s.Title = "Call Logs"
-					// s.Icon = "phone"
-					// s.Action = "admin"				
-					// s.Params["claim_id"] = id
-				// })
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "addresses"
+					s.Title = "Addresses"
+					s.Icon = "addresses"
+					s.Action = "admin"				
+					s.Url = "app/addresses"
+					// s.Run = "AddressesView"
+					s.Params["name_id"] = id
+				})
 			
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "history"
-					// s.Title = "Case History"
-					// s.Icon = "history"
-					// s.Action = "admin"				
-					// s.Url = "app/member-case-history"
-					// s.Params["claim_id"] = id
-					// s.Params["member_id"] = memberId
-				// })
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "contacts"
+					s.Title = "Contacts"
+					s.Icon = "contacts"
+					s.Action = "admin"		
+					s.Url = "app/contacts"	
+					s.Params["name_id"] = id
+				})
 			
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "documents"
-					// s.Title = "Documents"
-					// s.Icon = "documents"
-					// s.Action = "admin"
-					// s.Url = "app/claim-documents"
-					// s.Params["claim_id"] = id
-					// s.Params["service_id"] = 0
-				// })
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "products"
+					s.Title = "Products"
+					s.Icon = "products"
+					s.Action = "product"		
+					s.Url = "app/products"	
+					s.Params["client_id"] = id
+				})
+			})
 			
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "notes"
-					// s.Title = "Notes"
-					// s.Icon = "notes"
-					// s.Action = "admin"				
-					// s.Url = "app/claim-notes"
-					// s.Params["type"] = "C"
-					// s.Params["claim_id"] = id
-					// s.Params["service_id"] = 0
-				// })
+			utils.NewNavigatorItem(p.Nav, "financial", "Financial", func(item *utils.NavigatorItem) {
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "banks"
+					s.Title = "Banks"
+					s.Icon = "banks"
+					s.Action = "admin"
+					s.Params["name_id"] = id
+				})
 			
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "log"
-					// s.Title = "Audit Log"
-					// s.Icon = "timetable"
-					// s.Action = "admin"				
-					// s.Url = "app/claim-audit-logs"
-					// s.Params["claim_id"] = id
-					// s.Params["service_id"] = 0
-				// })
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "floats"
+					s.Title = "Floats"
+					s.Icon = "floats"
+					s.Action = "admin"				
+					s.Params["client_id"] = id
+				})
+			
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "case-fees"
+					s.Title = "Case Fees"
+					s.Icon = "case-fees"
+					s.Action = "admin"				
+					s.Params["client_id"] = id
+				})
+			})
+			
+			utils.NewNavigatorItem(p.Nav, "security", "Security", func(item *utils.NavigatorItem) {
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "authorisation"
+					s.Title = "Authorisation"
+					s.Icon = "authorisation"
+					s.Action = "admin"
+					s.Params["client_id"] = id
+				})
+			
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "providers"
+					s.Title = "Providers"
+					s.Icon = "providers"
+					s.Action = "admin"				
+					s.Params["client_id"] = id
+				})
 			})
 		},
 	})

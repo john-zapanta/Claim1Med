@@ -226,9 +226,11 @@ MainPage.prototype.InitializeSession = function(data) {
 	this.CloneSvg("authorisation", "approval");
 	this.CloneSvg("override", "approval");
 	
+	this.CloneSvg("providers", "account-multiple");
 	this.CloneSvg("providers-medical", "hospital");
 	this.CloneSvg("providers-travel", "plane-shield");
 	this.CloneSvg("hospitals", "hospital-building");
+	this.CloneSvg("clients", "earth");
 	this.CloneSvg("clients-policies", "earth");
 	this.CloneSvg("products", "earth");
 	
@@ -236,4 +238,8 @@ MainPage.prototype.InitializeSession = function(data) {
 	this.CloneSvg("claim-close", "alert-circle-outline");
 	this.CloneSvg("claim-decline", "close-circle-outline");
 	this.CloneSvg("claim-open", "check-circle-outline");
+	
+	this.CloneSvg("banks", "bank");
+	this.CloneSvg("floats", "table-edit");
+	this.CloneSvg("case-fees", "table-edit");
 };
