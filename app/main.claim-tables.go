@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"ibsi/utils"
 	"ibsi/template"
-	//"ibsi/session"
+	"ibsi/session"
 	"ibsi/dbase"
 )
 
@@ -23,36 +23,32 @@ func init() {
 			ts.Add("/app/{pid:claim-tables\\/?}")
 		},
 		OnInitPageData: func(r *http.Request, p *template.Page) {
-			//vid := session.GetVisitorId(r)
+			vid := session.GetVisitorId(r)
 			
 			p.Title = "Claim Tables"
 			p.Nav.WindowTitle = "Claim Tables"
 			
-			// p.Nav.CustomData = map[string]interface{}{
-				// "countries": dbase.Connections["DBApp"].OpenDataTable("GetCountries", dbase.TParameters{"action":1, "visit_id":vid}).GetRows(),
-				// "specialisation": dbase.Connections["DBApp"].OpenDataTable("GetDoctorSpecialisation", dbase.TParameters{"lookup":1, "visit_id":vid}).GetRows(),
-			// }
+			p.Nav.CustomData = map[string]interface{}{
+				"flagtypes": dbase.Connections["DBApp"].OpenDataTable("GetFlagTypes", dbase.TParameters{"lookup":1, "visit_id":vid}).GetRows(),
+			}
 			
 			utils.NewNavigatorItem(p.Nav, "tables1", "Claim & Service", func(item *utils.NavigatorItem) {
 			
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "doctors"
-					// s.Action = "admin"				
-					// s.Title = "Doctors"
-					// s.Icon = "doctor"
-					// s.Url = "app/providers"
-					// s.Run = "ProviderMasterDetailView"
-					// s.Css = "*"
-					// s.Params["provider_type"] = "D"
-				// })
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "claim-types"
+					s.Action = "admin"				
+					s.Title = "Claim Types"
+					s.Icon = "hospital"
+					s.Url = "app/claim-types"
+				})
 				
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "members"
-					// s.Action = "admin"
-					// s.Title = "Claims Processing"
-					// s.Icon = "users"
-					// s.Url = "app/claims-entry"
-				// })
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "service-types"
+					s.Action = "admin"
+					s.Title = "Service Types"
+					s.Icon = "pill"
+					s.Url = "app/service-types"
+				})
 			
 				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
 					// s.ID = "enquiries"
