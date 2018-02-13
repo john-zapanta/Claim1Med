@@ -32,7 +32,7 @@ function ClaimTypesView(params){
 				
 				grid.exportData.allow = true;
 				grid.exportData.name = "Claim Types";
-				grid.exportData.source = "DBMedics.GetClaimTypes";
+				grid.exportData.source = "DBApp.GetClaimTypes";
 				
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams

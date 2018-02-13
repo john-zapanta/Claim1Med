@@ -6,50 +6,40 @@
 // File name: view-gop-types.js
 // uses edit-gop-types.js
 //==================================================================================================
-function GOPTypesView(params){
-	var name = "app/gop-types";
-	
-	return new JDBGrid({
-		params: params,
-		options: {
-			horzScroll: true
-		},
-		toolbarTheme:"svg",
-		Painter: {
-			css: "gop-types"
+function GOPTypesView(params){	
+	return new jGrid($.extend(params, {
+		paintParams: {
+			css: "gop-types",
+			toolbar: {theme: "svg"}
 		},
 		editForm: function(id, container, dialog) {
 			GOPTypesEdit({
-				url: ("?code={0}").format(id),
+				code: id,
 				container: container,
-				containerPadding: 0,				
-				showToolbar: false,
-				pageControlTheme: "data-entry",
-				fillContainer: true,
-				dialog: dialog,
+				dialog: dialog
 			})
 		},
-		init: function(grid) {
+		init: function(grid, callback) {
 			grid.Methods.add("deleteConfirm", function(grid, id) {
 				return {
 					title: "Delete Guarantee of Payment Type",
-					message: ('Please confirm to delete guarantee of payment type "<b>{0}</b>"').format(grid.dataset.lookup(id, "service_description"))
+					message: ('Please confirm to delete guarantee of payment type "<b>{0}</b>"').format(grid.dataset.get("service_description"))
 				}
 			});
 			
-			grid.Events.OnInitGrid.add(function(grid) {
-				grid.optionsData.url = name;
-				grid.options.showToolbar = true;
-				grid.options.horzScroll = false;
-				grid.options.showPager = true;
-				grid.options.showSummary = false;
-				grid.options.cardView = false;
-				grid.options.autoScroll = true;
+			grid.Events.OnInit.add(function(grid) {
+				grid.optionsData.url = "app/gop-types";
+				
+				grid.options.horzScroll = true;
 				grid.options.allowSort = true;
-				grid.options.showSelection = false;
-				grid.options.showBand = false;
-				grid.options.simpleSearch = true;
-				grid.options.simpleSearchField = "filter";
+				
+				grid.search.visible = true;
+				grid.search.mode = "simple";
+				grid.search.columnName = "filter";
+				
+				grid.exportData.allow = true;
+				grid.exportData.name = "GOP Types";
+				grid.exportData.source = "DBApp.GetGOPTypes";
 				
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams
@@ -70,7 +60,7 @@ function GOPTypesView(params){
 				grid.Events.OnInitColumns.add(function(grid) {
 					grid.NewColumn({fname: "code", width: 150, allowSort: true, fixedWidth:true});
 					grid.NewColumn({fname: "service_description", width: 380, allowSort: true, fixedWidth:true});
-					grid.NewColumn({fname: "display_name", width: 300, allowSort: true, fixedWidth:false});
+					grid.NewColumn({fname: "display_name", width: 380, allowSort: true, fixedWidth:true});
 				});
 				
 				grid.Events.OnInitRow.add(function(grid, row) {	
@@ -78,5 +68,5 @@ function GOPTypesView(params){
 				});
 			});
 		}
-	});	
+	}));	
 };

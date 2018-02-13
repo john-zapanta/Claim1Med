@@ -49,37 +49,106 @@ func init() {
 					s.Icon = "pill"
 					s.Url = "app/service-types"
 				})
-			
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "enquiries"
-					// s.Action = "admin"
-					// s.Title = "Enquiries"
-					// s.Icon = "search"
-				// })
-				
-				// utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					// s.ID = "reports"
-					// s.Action = "admin"
-					// s.Title = "Reports"
-					// s.Icon = "table"
-					// s.Url = "engine/sys-reports"
-				// })
 			})
 			
 			utils.NewNavigatorItem(p.Nav, "tables2", "General", func(item *utils.NavigatorItem) {
+			
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "case-fees-types"
+					s.Action = "admin"				
+					s.Title = "Case Fees Types"
+					s.Icon = "currency-usd"
+					s.Url = "app/case-fees-types"
+				})
 				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "customer-service-types"
+					s.Action = "admin"				
+					s.Title = "Customer Service Types"
+					s.Icon = "deskphone"
+					s.Url = "app/customer-service-types"
+				})
+				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "gop-types"
+					s.Action = "admin"				
+					s.Title = "Guarantee of Payment Types"
+					s.Icon = "currency-usd"
+					s.Url = "app/gop-types"
+				})
+				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "noc-types"
+					s.Action = "admin"				
+					s.Title = "Notification of Claims Types"
+					s.Icon = "alert-circle-outline"
+					s.Url = "app/noc-types"
+				})
+				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "recovery-types"
+					s.Action = "admin"				
+					s.Title = "Recovery Types"
+					s.Icon = "autorenew"
+					s.Url = "app/recovery-types"
+				})
+				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "cost-containment-types"
+					s.Action = "admin"				
+					s.Title = "Cost Containment Types"
+					s.Icon = "inbox-arrow-down"
+					s.Url = "app/cost-containment-types"
+				})
 			})
 			
 			utils.NewNavigatorItem(p.Nav, "flags", "Flags", func(item *utils.NavigatorItem) {
 				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "flag-types"
+					s.Action = "admin"				
+					s.Title = "Flag Types"
+					s.Icon = "flag"
+					s.Url = "app/flag-types"
+				})
 			})
 			
 			utils.NewNavigatorItem(p.Nav, "codes-notes", "Codes & Notes", func(item *utils.NavigatorItem) {
 				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "service-status-codes"
+					s.Action = "admin"				
+					s.Title = "Service Status Codes"
+					s.Icon = "checkbox-multiple-marked-some"
+					// s.Url = "app/service-status-codes"
+				})
+				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "claim-notes-types"
+					s.Action = "admin"				
+					s.Title = "Claim Notes"
+					s.Icon = "pencil-box-outline"
+					//s.Url = "app/flag-types"
+				})
+				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "action-types"
+					s.Action = "admin"				
+					s.Title = "Actions"
+					s.Icon = "thumb-up-outline"
+					s.Url = "app/action-types"
+				})
 			})
 			
 			utils.NewNavigatorItem(p.Nav, "log", "Log", func(item *utils.NavigatorItem) {
 				
+				utils.NewMenuItem(item, func(s *utils.MenuItem) {
+					s.ID = "audit-log"
+					s.Action = "admin"				
+					s.Title = "Audit Log"
+					s.Icon = "table-edit"
+					//s.Url = "app/flag-types"
+				})
 			})
 		},
 	})
