@@ -12,15 +12,15 @@ function AuditLogTypesEdit(params){
 		container: params.container,
 		// labelWidth: 180,
 		containerPadding: defaultValue(params.containerPadding, 10),
-		pageControlTheme: defaultValue(params.pageControlTheme, "main"),
-		fillContainer: defaultValue(params.fillContainer, false),
-		showToolbar: params.showToolbar,
-		url: params.url,
+		pageControlTheme: defaultValue(params.pageControlTheme, "data-entry"),
+		fillContainer: defaultValue(params.fillContainer, true),
+		showToolbar: defaultValue(params.showToolbar, false),
+		url: ("?code={0}").format(params.code),
 		postBack: "app/auditlog-types",
 		init: function(editor) {
 			editor.Events.OnInitData.add(function(sender, data) {
 			data.Columns
-				.setprops("code", {label:"Code", key:true, required:true})
+				.setprops("code", {label:"Code", key:true, maxLength:3, upperCase:true, required:true, readonly:sender.mode === "edit"})
 				.setprops("description", {label:"Description", key:true, required:true})
 				.setprops("log_type", {label:"Log Type", required:true})
 				.setprops("is_active", {label:"Status"})

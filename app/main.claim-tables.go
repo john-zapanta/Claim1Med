@@ -128,7 +128,7 @@ func init() {
 					s.Action = "admin"				
 					s.Title = "Claim Notes"
 					s.Icon = "pencil-box-outline"
-					//s.Url = "app/flag-types"
+					s.Url = "app/claim-notes-types"
 				})
 				
 				utils.NewMenuItem(item, func(s *utils.MenuItem) {
@@ -143,11 +143,11 @@ func init() {
 			utils.NewNavigatorItem(p.Nav, "log", "Log", func(item *utils.NavigatorItem) {
 				
 				utils.NewMenuItem(item, func(s *utils.MenuItem) {
-					s.ID = "audit-log"
+					s.ID = "auditlog-types"
 					s.Action = "admin"				
 					s.Title = "Audit Log"
 					s.Icon = "table-edit"
-					//s.Url = "app/flag-types"
+					s.Url = "app/auditlog-types"
 				})
 			})
 		},

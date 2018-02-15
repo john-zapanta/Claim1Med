@@ -115,7 +115,7 @@ function ListFlagSubTypes(params){
 					}];
 				})
 				
-				grid.optionsData.url = "flag-sub-types?"+ ObjectToRequestParams(params.requestParams);
+				grid.optionsData.url = "flag-sub-types";
 				grid.options.fixedColumnWidths = true;
 				grid.options.allowSort = true;
 				grid.options.autoScroll = false;

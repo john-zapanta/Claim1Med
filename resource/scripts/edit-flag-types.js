@@ -16,7 +16,7 @@ function FlagTypesEdit(params){
 		fillContainer: defaultValue(params.fillContainer, true),
 		showToolbar: defaultValue(params.showToolbar, false),
 		url: ("?code={0}").format(params.code),
-		postBack: "app/flag-types",
+		postBack: "flag-types",
 		init: function(editor) {
 			editor.Events.OnInitData.add(function(sender, data) {
 			data.Columns
