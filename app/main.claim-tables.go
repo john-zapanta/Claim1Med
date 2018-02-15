@@ -120,7 +120,7 @@ func init() {
 					s.Action = "admin"				
 					s.Title = "Service Status Codes"
 					s.Icon = "checkbox-multiple-marked-some"
-					// s.Url = "app/service-status-codes"
+					s.Url = "app/service-status-codes"
 				})
 				
 				utils.NewMenuItem(item, func(s *utils.MenuItem) {
