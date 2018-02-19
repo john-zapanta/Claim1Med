@@ -28,6 +28,7 @@ func init() {
 		cmd.NewParameter("service_type", "string", "in", 3, "")
 		cmd.NewParameter("code", "string", "in", 7, "")
 		cmd.NewParameter("filter", "string", "in", 100, "")
+		cmd.NewParameter("action", "int", "in", 0, 0)
 		cmd.NewParameter("page", "int", "in", 0, 1)
 		cmd.NewParameter("pagesize", "int", "in", 0, 0)
 		cmd.NewParameter("row_count", "int", "inout", 0, 0)

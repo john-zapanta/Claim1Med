@@ -24,8 +24,8 @@ func init() {
 
 	dbase.Connections["DBApp"].NewCommand("GetCostContainmentTypes", "GetCostContainmentTypes", "procedure", func(cmd dbase.ICommand) {
 		cmd.NewParameter("code", "string", "in", 4, "")
-		cmd.NewParameter("lookup", "int", "in", 0, 0)
 		cmd.NewParameter("filter", "string", "in", 100, "")
+		cmd.NewParameter("action", "int", "in", 0, 0)
 		cmd.NewParameter("page", "int", "in", 0, 1)
 		cmd.NewParameter("pagesize", "int", "in", 0, 0)
 		cmd.NewParameter("row_count", "int", "inout", 0, 0)
