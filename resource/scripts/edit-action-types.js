@@ -54,7 +54,7 @@ function EditActionSubTypes(params) {
 			editor.Events.OnInitData.add(function(sender, data) {
 				data.Columns
 					.setprops("code", {label:"Code", maxLength:3, upperCase:true, key: true, required:true, readonly:sender.mode === "edit"})
-					.setprops("action", {label:"Sub-Type", maxLength:60, required:true})
+					.setprops("action_name", {label:"Sub-Type", maxLength:60, required:true})
 					.setprops("is_active", {label:"Status"})
 				
 				if(params.initEdit) {
@@ -66,7 +66,7 @@ function EditActionSubTypes(params) {
 				editor.NewGroupEdit("General", function(editor, tab) {
 					editor.AddGroup("Action Sub-Type", function(editor) {
 						editor.AddEdit("code");
-						editor.AddEdit("action");
+						editor.AddEdit("action_name");
 					});
 					editor.AddGroup("Option", function(editor) {
 						editor.AddRadioButton("is_active", {

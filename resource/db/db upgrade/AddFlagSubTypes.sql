@@ -1,21 +1,22 @@
-DROP PROCEDURE [dbo].[AddActionSubTypes]
+DROP PROCEDURE [dbo].[AddFlagSubTypes]
 GO
 
-CREATE PROCEDURE [dbo].[AddActionSubTypes]  
+CREATE PROCEDURE [dbo].[AddFlagSubTypes]  
 (
-	@action_type char(3) = '',
-	@code char(3) = '',
-    @action_name as varchar(100) = '',
-	@is_active as bit = 1,
-    @visit_id as bigint = 0, /* if needed, the user will be got from here ... and subsequently, their rights*/
+	@code char(3) = '' OUTPUT,
+	@flag_code char(4) = '',
+    @flag_sub_type varchar(50) = '',
+	@is_active bit = 1,
+	
     @action as tinyint = 10, /* 20 = insert; 10 = update; 0 = delete;*/
+    @visit_id as bigint = 0, /* if needed, the user will be got from here ... and subsequently, their rights*/
     @action_status_id as int = 0 OUTPUT,
-    @action_msg as varchar(2048) = '' OUTPUT
+    @action_msg as varchar(200) = '' OUTPUT
 ) AS
 BEGIN
 	SET NOCOUNT ON;
 
-	DECLARE @user_id AS int = 0
+    DECLARE @user_id AS int = 0
     DECLARE @update_user AS varchar(10) = ''
 	DECLARE @update_date [datetime] = GETDATE()   
 
@@ -28,13 +29,13 @@ BEGIN
 		@action_status_id = @action_status_id OUTPUT,
 		@action_msg = @action_msg OUTPUT
 
-	DECLARE @cnt AS int = 0
+	DECLARE @cnt AS int = 0  
 
 	IF @action = 20 /* insert */
 	BEGIN
 		SET NOCOUNT ON;
 
-		SELECT @cnt = count(*) from actions where code = @code
+		SELECT @cnt = count(*) from flag_sub_types where code = @code
 
 		IF @cnt > 0
 		BEGIN
@@ -42,34 +43,34 @@ BEGIN
 		   SET @action_status_id = -1
 		END
 
-		SELECT @cnt = count(*) from actions where UPPER(action_name) = UPPER(@action_name)
+		SELECT @cnt = count(*) from flag_sub_types where UPPER(service_description) = UPPER(@flag_sub_type)
 
 		IF @cnt > 0
 		BEGIN
 		   IF @action_msg = ''
-		      SET @action_msg = 'Action Name <B>' + @action_name + '</B> already exist.'
+		      SET @action_msg = 'Flag Sub Type Description<B>' + @flag_sub_type + '</B> already exist.'
 		   ELSE
-		      SET @action_msg = @action_msg + ' </BR> Action Name <B>' + @action_name + '</B> already exist.' 
+		      SET @action_msg = @action_msg + ' </BR> Flag Sub Type Description <B>' + @flag_sub_type + '</B> already exist.' 
 
 		   SET @action_status_id = -1
 		END
 
 		IF NOT @action_msg = '' GOTO DONE
 
-		INSERT INTO actions(action_type, code, action_name, is_active, create_user, create_date)
-		VALUES(@action_type, @code, @action_name, @is_active, @update_user, @update_date)
+		INSERT INTO flag_sub_types(code, flag_code, service_description, is_active, create_user, create_date)
+		VALUES(@code, @flag_code, @flag_sub_type, @is_active, @update_user, @update_date)
     END ELSE IF @action = 10 /* update */
     BEGIN
-		UPDATE actions set
-			action_type = @action_type,
-			action_name = @action_name,
+		UPDATE flag_sub_types set
+			flag_code = @flag_code,
+			service_description = @flag_sub_type,
 			is_active = @is_active,
 			update_user = @update_user,
 			update_date = @update_date
         WHERE code = @code
 	END ELSE IF @action = 0 /* delete */
 	BEGIN
-		DELETE actions WHERE code = @code
+		DELETE flag_sub_types WHERE code = @code
     END
     
 DONE:
@@ -79,7 +80,14 @@ DONE:
         --EXEC dbo.LogError @error_log_id OUTPUT, @action_status_id, '', 0, @visit_id 
         --SET @action_msg = dbo.F_GetErrorLog(@error_log_id)
     END
+    
 END
+
+
+
+
+
+
 
 
 

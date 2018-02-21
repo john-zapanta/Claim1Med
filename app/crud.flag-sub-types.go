@@ -19,10 +19,12 @@ func init() {
 		},
 		OnNewRecord: func(mode string, row map[string]interface{}, w http.ResponseWriter, r *http.Request) {
 			row["is_active"] = true
+			row["flag_code"] = r.Form.Get("flag_code")
 		},
 	})
 
 	dbase.Connections["DBApp"].NewCommand("GetFlagSubTypes", "GetFlagSubTypes", "procedure", func(cmd dbase.ICommand) {
+		cmd.NewParameter("flag_code", "string", "in", 4, "")
 		cmd.NewParameter("code", "string", "in", 3, "")
 		cmd.NewParameter("filter", "string", "in", 100, "")
 		cmd.NewParameter("action", "int", "in", 0, 0)

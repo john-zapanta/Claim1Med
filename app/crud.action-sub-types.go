@@ -37,7 +37,7 @@ func init() {
 	})
 
 	dbase.Connections["DBApp"].NewCommand("AddActionSubTypes", "AddActionSubTypes", "procedure", func(cmd dbase.ICommand) {
-		cmd.NewParameter("action_type", "string", "inout", 3, "")
+		cmd.NewParameter("action_type", "string", "in", 3, "")
 		cmd.NewParameter("code", "string", "in", 3, "")
 		cmd.NewParameter("action_name", "string", "in", 100, "")
 		cmd.NewParameter("is_active", "int", "in", 0, 1)

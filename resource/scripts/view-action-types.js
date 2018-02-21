@@ -126,12 +126,12 @@ function ListActionSubTypes(params){
 				grid.Events.OnInitData.add(function(grid, data) {
 					data.Columns
 						.setprops("code", {label:"Code", key: true})
-						.setprops("action", {label:"Sub-Type"})
+						.setprops("action_name", {label:"Sub-Type"})
 				});
 				
 				grid.Events.OnInitColumns.add(function(grid) {
 					grid.NewColumn({fname: "code", width: 100, fixedWidth:true});
-					grid.NewColumn({fname: "action", width: "100%", fixedWidth:false});
+					grid.NewColumn({fname: "action_name", width: "100%", fixedWidth:false});
 				});
 				
 				grid.Events.OnInitRow.add(function(grid, row) {	

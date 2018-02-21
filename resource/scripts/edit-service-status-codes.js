@@ -15,8 +15,8 @@ function ServiceStatusCodesEdit(params){
 		pageControlTheme: defaultValue(params.pageControlTheme, "data-entry"),
 		fillContainer: defaultValue(params.fillContainer, false),
 		showToolbar: params.showToolbar,
-		url:("?service_type={0}").format(params.code),
-		postBack: "service-status-details",
+		url:("?service_type={0}&code={1}").format(params.statusCode, params.code),
+		postBack: "app/service-status-details",
 		init: function(editor) {
 			editor.Events.OnInitData.add(function(sender, data) {
 			data.Columns
