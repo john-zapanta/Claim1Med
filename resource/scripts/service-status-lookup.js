@@ -1,6 +1,6 @@
 var ServiceStatusLookup = function(edit, grid) {
 	grid.Methods.add("localSearch", function(grid, search) {
-		return search.test("status_code") || search.test("status_description");
+		return search.test("status_code") || search.test("main_status");
 	});
 	
 
@@ -21,7 +21,7 @@ var ServiceStatusLookup = function(edit, grid) {
 			.addColumn("page", 1)
 			.addColumn("pagesize", 1000000)
 			
-			console.log(edit.dataset.get("service_type"));
+			//console.log(edit.dataset.get("service_type"));
 	});
 
 	grid.Events.OnInitData.add(function(grid, data) {
