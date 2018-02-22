@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"ibsi/utils"
 	"ibsi/template"
-	"ibsi/session"
+	//"ibsi/session"
 	"ibsi/dbase"
 )
 
@@ -23,13 +23,14 @@ func init() {
 			ts.Add("/app/{pid:claim-tables\\/?}")
 		},
 		OnInitPageData: func(r *http.Request, p *template.Page) {
-			vid := session.GetVisitorId(r)
+			//vid := session.GetVisitorId(r)
 			
 			p.Title = "Claim Tables"
 			p.Nav.WindowTitle = "Claim Tables"
 			
 			p.Nav.CustomData = map[string]interface{}{
-				"flagtypes": dbase.Connections["DBApp"].OpenDataTable("GetFlagTypes", dbase.TParameters{"lookup":1, "visit_id":vid}).GetRows(),
+				// "flagtypes": dbase.Connections["DBApp"].OpenDataTable("GetFlagTypes", dbase.TParameters{"lookup":1, "visit_id":vid}).GetRows(),
+				// "servicestatus": dbase.Connections["DBApp"].OpenDataTable("GetServiceStatus", dbase.TParameters{"lookup":1, "visit_id":vid}).GetRows(),
 			}
 			
 			utils.NewNavigatorItem(p.Nav, "tables1", "Claim & Service", func(item *utils.NavigatorItem) {
