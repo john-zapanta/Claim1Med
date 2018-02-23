@@ -22,9 +22,9 @@ function ServiceStatusCodesView(params){
 				grid.options.horzScroll = true;
 				grid.options.showMasterDetail = true;
 				
-				grid.search.visible = true;
-				grid.search.mode = "simple";
-				grid.search.columnName = "filter";
+				grid.search.visible = false;
+				// grid.search.mode = "simple";
+				// grid.search.columnName = "filter";
 				
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams
