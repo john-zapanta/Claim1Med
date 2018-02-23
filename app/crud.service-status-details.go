@@ -24,7 +24,8 @@ func init() {
 		},
 	})
 	
-	dbase.Connections["DBApp"].NewCommand("GetServiceStatus", "GetServiceStatus", "procedure", func(cmd dbase.ICommand) {
+	// dbase.Connections["DBApp"].NewCommand("GetServiceStatus", "GetServiceStatus", "procedure", func(cmd dbase.ICommand) {
+	dbase.Connections["DBApp"].NewCommand("lookup_service_status", "GetServiceStatus", "procedure", func(cmd dbase.ICommand) {
 		cmd.NewParameter("service_type", "string", "in", 3, "")
 		cmd.NewParameter("lookup", "int", "in", 0, 0)
 		cmd.NewParameter("filter", "string", "in", 100, "")

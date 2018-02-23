@@ -3,16 +3,15 @@ var ServiceStatusLookup = function(edit, grid) {
 		return search.test("status_code") || search.test("main_status");
 	});
 	
-
 	grid.Events.OnInitGrid.add(function(grid) {
 		grid.options.simpleSearch = true;
 		grid.options.simpleSearchField = "filter";
-		grid.optionsData.url = "servicestatus";
+		// grid.optionsData.url = "servicestatus";
+		grid.optionsData.url = "lookup?name=lookup_service_status";
 	});
 	
 	grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 		dataParams
-			
 			.addColumn("service_type", edit.dataset.get("service_type"))
 			.addColumn("lookup", 1)
 			.addColumn("filter", "")
@@ -21,7 +20,7 @@ var ServiceStatusLookup = function(edit, grid) {
 			.addColumn("page", 1)
 			.addColumn("pagesize", 1000000)
 			
-			//console.log(edit.dataset.get("service_type"));
+			// console.log(edit.dataset.get("service_type"));
 	});
 
 	grid.Events.OnInitData.add(function(grid, data) {
