@@ -19,7 +19,7 @@ jMemberSearch.prototype.viewCss = "members report";
 jMemberSearch.prototype.viewUrl = "app/members-search";
 jMemberSearch.prototype.searchWidth = 600;
 jMemberSearch.prototype.exportName = "Members";
-jMemberSearch.prototype.exportSource = "DBMedics.GetMembersEnquiry";
+jMemberSearch.prototype.exportSource = "DBApp.GetMembersEnquiry";
 jMemberSearch.prototype.popuMenuTitle = "Members";
 
 jMemberSearch.prototype.initialize = function(params) {
