@@ -12,15 +12,15 @@ function CostContainmentTypesEdit(params){
 		container: params.container,
 		labelWidth: 150,
 		containerPadding: defaultValue(params.containerPadding, 10),
-		pageControlTheme: defaultValue(params.pageControlTheme, "main"),
-		fillContainer: defaultValue(params.fillContainer, false),
-		showToolbar: params.showToolbar,
-		url: params.url,
+		pageControlTheme: defaultValue(params.pageControlTheme, "data-entry"),
+		fillContainer: defaultValue(params.fillContainer, true),
+		showToolbar: defaultValue(params.showToolbar, false),
 		postBack: "app/cost-containment-types",
+		url: ("?code={0}").format(params.code),
 		init: function(editor) {
 			editor.Events.OnInitData.add(function(sender, data) {
 			data.Columns
-				.setprops("code", {label:"Code", key:true, required:true})
+				.setprops("code", {label:"Code", key:true, maxLength:4, upperCase:true, required:true, readonly:sender.mode === "edit"})
 				.setprops("service_description", {label:"Cost Containment Type", required:true})
 				.setprops("display_name", {label:"Display Name"})
 				.setprops("is_active", {label:"Status"})
@@ -28,7 +28,7 @@ function CostContainmentTypesEdit(params){
 			
 			editor.Events.OnInitEditor.add(function(sender, editor) {
 				editor.NewGroupEdit("General", function(editor, tab) {
-					editor.AddGroup("Recovery Type", function(editor) {
+					editor.AddGroup("Cost Containment Type", function(editor) {
 						editor.AddEdit({ID:"code"});
 						editor.AddEdit({ID:"service_description"});
 						editor.AddEdit({ID:"display_name"});

@@ -7,49 +7,39 @@
 // uses edit-customer-service-types.js
 //==================================================================================================
 function CustomerServiceTypesView(params){
-	var name = "app/customer-service-types";
-	
-	return new JDBGrid({
-		params: params,
-		options: {
-			horzScroll: true
-		},
-		toolbarTheme:"svg",
-		Painter: {
-			css: "customer-service-types"
+	return new jGrid($.extend(params, {
+		paintParams: {
+			css: "customer-service-types",
+			toolbar: {theme: "svg"}
 		},
 		editForm: function(id, container, dialog) {
 			CustomerServiceTypesEdit({
-				url: ("?code={0}").format(id),
+				code: id,
 				container: container,
-				containerPadding: 0,				
-				showToolbar: false,
-				pageControlTheme: "data-entry",
-				fillContainer: true,
-				dialog: dialog,
+				dialog: dialog
 			})
 		},
-		init: function(grid) {
+		init: function(grid, callback) {
 			grid.Methods.add("deleteConfirm", function(grid, id) {
 				return {
 					title: "Delete Customer Service Type",
-					message: ('Please confirm to delete customer service type "<b>{0}</b>"').format(grid.dataset.lookup(id, "service_description"))
+					message: ('Please confirm to delete customer service type "<b>{0}</b>"').format(grid.dataset.get("service_description"))
 				}
 			});
 			
-			grid.Events.OnInitGrid.add(function(grid) {
-				grid.optionsData.url = name;
-				grid.options.showToolbar = true;
-				grid.options.horzScroll = false;
-				grid.options.showPager = true;
-				grid.options.showSummary = false;
-				grid.options.cardView = false;
-				grid.options.autoScroll = true;
+			grid.Events.OnInit.add(function(grid) {
+				grid.optionsData.url = "app/customer-service-types?";
+				
+				grid.options.horzScroll = true;
 				grid.options.allowSort = true;
-				grid.options.showSelection = false;
-				grid.options.showBand = false;
-				grid.options.simpleSearch = true;
-				grid.options.simpleSearchField = "filter";
+				
+				grid.search.visible = true;
+				grid.search.mode = "simple";
+				grid.search.columnName = "filter";
+				
+				grid.exportData.allow = true;
+				grid.exportData.name = "Customer Service Types";
+				grid.exportData.source = "DBApp.GetCustomerServiceTypes";
 				
 				grid.Events.OnInitDataRequest.add(function(grid, dataParams) {
 					dataParams
@@ -68,7 +58,7 @@ function CustomerServiceTypesView(params){
 
 				grid.Events.OnInitColumns.add(function(grid) {
 					grid.NewColumn({fname: "code", width: 150, allowSort: true, fixedWidth:true});
-					grid.NewColumn({fname: "service_description", width: 380, allowSort: true, fixedWidth:false});
+					grid.NewColumn({fname: "service_description", width: 380, allowSort: true, fixedWidth:true});
 				});
 				
 				/* grid.Events.OnInitRow.add(function(grid, row) {	
@@ -76,5 +66,5 @@ function CustomerServiceTypesView(params){
 				}); */
 			});
 		}
-	});	
+	}));	
 };
